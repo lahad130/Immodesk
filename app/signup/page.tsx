@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
 export default function SignupPage() {
@@ -10,6 +11,7 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -17,17 +19,23 @@ export default function SignupPage() {
     setLoading(true)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
       },
     })
 
     if (error) {
       setError(error.message)
       setLoading(false)
+      return
+    }
+
+    // Email confirmation disabled → session immediately active
+    if (data.session) {
+      router.push('/dashboard')
       return
     }
 
