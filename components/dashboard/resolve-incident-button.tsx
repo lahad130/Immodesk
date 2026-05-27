@@ -1,18 +1,39 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useTransition, useState } from 'react'
 import { resolveIncident } from '@/app/dashboard/locataires/[id]/actions'
 
-export default function ResolveIncidentButton({ incidentId }: { incidentId: string }) {
+export default function ResolveIncidentButton({
+  incidentId,
+  leaseId,
+}: {
+  incidentId: string
+  leaseId: string
+}) {
   const [pending, startTransition] = useTransition()
+  const [failed, setFailed] = useState(false)
 
   return (
     <button
-      onClick={() => startTransition(() => resolveIncident(incidentId))}
+      onClick={() =>
+        startTransition(async () => {
+          try {
+            await resolveIncident(incidentId, leaseId)
+          } catch {
+            setFailed(true)
+          }
+        })
+      }
       disabled={pending}
-      className="text-xs text-[#555] hover:text-white border border-white/[0.08] hover:border-white/20 px-2.5 py-1 rounded-lg transition disabled:opacity-50"
+      aria-label={pending ? 'Résolution en cours' : 'Marquer comme résolu'}
+      aria-busy={pending}
+      className={`text-xs border px-2.5 py-1 rounded-lg transition disabled:opacity-50 ${
+        failed
+          ? 'text-red-400 border-red-500/20'
+          : 'text-[#555] hover:text-white border-white/[0.08] hover:border-white/20'
+      }`}
     >
-      {pending ? '...' : 'Résolu'}
+      {pending ? '...' : failed ? 'Erreur' : 'Résolu'}
     </button>
   )
 }
