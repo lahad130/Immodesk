@@ -89,3 +89,73 @@ export interface DashboardMetrics {
   aiMessages: number
   activeProperties: number
 }
+
+export type LeaseStatus = 'actif' | 'expire' | 'resilie'
+export type PaymentStatus = 'paye' | 'en_attente' | 'retard'
+export type InspectionType = 'entree' | 'sortie'
+export type IncidentStatus = 'ouvert' | 'en_cours' | 'resolu'
+
+export interface Tenant {
+  id: string
+  agency_id: string
+  full_name: string
+  phone: string | null
+  whatsapp: string | null
+  email: string | null
+  created_at: string
+}
+
+export interface Lease {
+  id: string
+  agency_id: string
+  property_id: string | null
+  tenant_id: string
+  start_date: string
+  end_date: string
+  monthly_rent: number
+  deposit: number
+  status: LeaseStatus
+  created_at: string
+  // joined
+  tenant?: Tenant | null
+  property?: Property | null
+}
+
+export interface Payment {
+  id: string
+  lease_id: string
+  amount_fcfa: number
+  due_date: string
+  paid_date: string | null
+  status: PaymentStatus
+  created_at: string
+  // joined
+  lease?: Lease | null
+}
+
+export interface Inspection {
+  id: string
+  agency_id: string
+  property_id: string | null
+  lease_id: string | null
+  type: InspectionType
+  inspection_date: string
+  notes: string | null
+  photos: string[]
+  report_url: string | null
+  created_at: string
+  // joined
+  property?: Property | null
+  lease?: Lease | null
+}
+
+export interface Incident {
+  id: string
+  agency_id: string
+  property_id: string | null
+  lease_id: string | null
+  title: string
+  description: string | null
+  status: IncidentStatus
+  created_at: string
+}
