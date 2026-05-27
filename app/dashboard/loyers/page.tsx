@@ -132,7 +132,7 @@ export default async function LoyersPage() {
               const tenant = lease?.tenant ?? null
               const whatsapp = (tenant?.whatsapp ?? '').replace(/\D/g, '')
               const dueDate = new Date(pmt.due_date as string)
-              const daysLate = Math.max(0, Math.floor((Date.now() - dueDate.getTime()) / 86_400_000))
+              const daysLate = Math.max(0, Math.floor((now.getTime() - dueDate.getTime()) / 86_400_000))
               const propertyTitle = lease?.property?.title ?? 'Bien non assigné'
               const waMessage = encodeURIComponent(
                 `Bonjour ${tenant?.full_name ?? 'cher locataire'}, votre loyer de ${formatFCFA(pmt.amount_fcfa as number)} pour ${propertyTitle} est en retard de ${daysLate} jour${daysLate > 1 ? 's' : ''}. Merci de régulariser. Quittance : ${baseUrl}/api/quittance/${pmt.id}`
