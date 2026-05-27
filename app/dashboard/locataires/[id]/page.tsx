@@ -301,6 +301,21 @@ export default async function LocataireDetailPage({
                   <p className="text-sm text-[#888]">{formatFCFA(lease.deposit)}</p>
                 </div>
               </div>
+
+              <div className="pt-2 border-t border-white/[0.07] mt-1">
+                <a
+                  href={`/api/bail/${lease.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 w-full px-3 py-2 bg-white/[0.04] hover:bg-white/[0.07] text-[#888] hover:text-white text-xs font-medium rounded-xl transition border border-white/[0.08]"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 shrink-0">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg>
+                  Générer le bail PDF
+                </a>
+              </div>
             </div>
           </div>
         </div>
