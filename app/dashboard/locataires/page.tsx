@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
 import { formatFCFA } from '@/lib/format'
-import type { Tenant, Lease } from '@/lib/types'
 import Link from 'next/link'
 import NouveauLocataireModal from '@/components/dashboard/nouveau-locataire-modal'
 
@@ -18,6 +17,18 @@ const filterOptions = [
 
 type FilterValue = 'tous' | 'retard' | 'actif'
 
+type TenantRow = {
+  id: string
+  full_name: string
+  phone: string | null
+  lease: {
+    id: string
+    monthly_rent: number
+    property: { title: string } | null
+    lastPaymentStatus: keyof typeof paymentStatusConfig | null
+  } | null
+}
+
 export default async function LocatairesPage({
   searchParams,
 }: {
@@ -30,41 +41,56 @@ export default async function LocatairesPage({
 
   const supabase = await createClient()
 
+  // Fetch all tenants
+  const { data: tenants } = await supabase
+    .from('tenants')
+    .select('id, full_name, phone')
+    .order('full_name')
+
+  // Fetch active leases with property info
   const { data: leases } = await supabase
     .from('leases')
-    .select(`
-      *,
-      tenant:tenant_id(*),
-      property:property_id(id, title, neighborhood, city)
-    `)
+    .select('id, tenant_id, monthly_rent, property:property_id(title)')
     .eq('status', 'actif')
-    .order('created_at', { ascending: false })
 
+  // Fetch last payment per lease
   const leaseIds = (leases ?? []).map((l) => l.id)
   const { data: lastPayments } = leaseIds.length
     ? await supabase
         .from('payments')
         .select('lease_id, status, due_date')
         .in('lease_id', leaseIds)
-        // Ordered DESC so first occurrence per lease_id in the array is the most-recent payment
+        // Ordered DESC so first occurrence per lease_id is the most-recent payment
         .order('due_date', { ascending: false })
     : { data: [] }
 
-  function lastPaymentStatus(leaseId: string): keyof typeof paymentStatusConfig {
-    const p = (lastPayments ?? []).find((x) => x.lease_id === leaseId)
-    return (p?.status as keyof typeof paymentStatusConfig) ?? 'en_attente'
+  // Build a map: tenant_id → lease + last payment status
+  const leaseByTenant = new Map<string, TenantRow['lease']>()
+  for (const lease of leases ?? []) {
+    if (!lease.tenant_id) continue
+    const lastPmt = (lastPayments ?? []).find((p) => p.lease_id === lease.id)
+    const status = (lastPmt?.status ?? null) as keyof typeof paymentStatusConfig | null
+    leaseByTenant.set(lease.tenant_id, {
+      id: lease.id,
+      monthly_rent: lease.monthly_rent as number,
+      property: (lease.property as unknown as { title: string } | null),
+      lastPaymentStatus: status,
+    })
   }
 
-  type LeaseRow = Lease & {
-    tenant: Tenant
-    property: { id: string; title: string; neighborhood: string | null; city: string } | null
-  }
+  // Build display rows
+  let rows: TenantRow[] = (tenants ?? []).map((t) => ({
+    id: t.id,
+    full_name: t.full_name,
+    phone: t.phone,
+    lease: leaseByTenant.get(t.id) ?? null,
+  }))
 
-  let displayLeases = (leases as LeaseRow[]) ?? []
+  // Apply filter (only affects tenants with a lease)
   if (filtre === 'retard') {
-    displayLeases = displayLeases.filter((l) => lastPaymentStatus(l.id) === 'retard')
+    rows = rows.filter((r) => r.lease?.lastPaymentStatus === 'retard')
   } else if (filtre === 'actif') {
-    displayLeases = displayLeases.filter((l) => lastPaymentStatus(l.id) !== 'retard')
+    rows = rows.filter((r) => r.lease && r.lease.lastPaymentStatus !== 'retard')
   }
 
   return (
@@ -72,7 +98,7 @@ export default async function LocatairesPage({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold text-white">Locataires</h2>
-          <p className="text-sm text-[#888]">{displayLeases.length} locataire{displayLeases.length !== 1 ? 's' : ''}</p>
+          <p className="text-sm text-[#888]">{rows.length} locataire{rows.length !== 1 ? 's' : ''}</p>
         </div>
         <NouveauLocataireModal />
       </div>
@@ -105,38 +131,62 @@ export default async function LocatairesPage({
           <span>Paiement</span>
         </div>
         <div className="divide-y divide-white/[0.05]">
-          {displayLeases.map((lease) => {
-            const status = lastPaymentStatus(lease.id)
-            const sc = paymentStatusConfig[status]
-            return (
-              <Link
-                key={lease.id}
-                href={`/dashboard/locataires/${lease.id}`}
-                className="grid sm:grid-cols-[1fr_1fr_130px_90px] gap-4 items-center px-5 py-4 hover:bg-white/[0.02] transition"
-              >
+          {rows.map((row) => {
+            const sc = row.lease?.lastPaymentStatus
+              ? paymentStatusConfig[row.lease.lastPaymentStatus]
+              : null
+            const inner = (
+              <>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-[#1f1f1f] border border-white/10 flex items-center justify-center text-xs font-semibold text-white shrink-0">
-                    {(lease.tenant?.full_name ?? '??').slice(0, 2).toUpperCase()}
+                    {row.full_name.slice(0, 2).toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{lease.tenant?.full_name ?? '—'}</p>
-                    <p className="text-xs text-[#666] truncate">{lease.tenant?.phone ?? '—'}</p>
+                    <p className="text-sm font-medium text-white truncate">{row.full_name}</p>
+                    <p className="text-xs text-[#666] truncate">{row.phone ?? '—'}</p>
                   </div>
                 </div>
                 <p className="text-sm text-[#888] truncate">
-                  {lease.property?.title ?? <span className="text-[#555]">Non assigné</span>}
+                  {row.lease?.property?.title ?? <span className="text-[#444]">Aucun bail</span>}
                 </p>
-                <p className="text-sm font-semibold text-[#3ECF8E]">{formatFCFA(lease.monthly_rent)}</p>
-                <span className={`text-xs font-semibold px-2 py-1 rounded-full w-fit ${sc.className}`}>{sc.label}</span>
+                <p className="text-sm font-semibold text-[#3ECF8E]">
+                  {row.lease ? formatFCFA(row.lease.monthly_rent) : <span className="text-[#444]">—</span>}
+                </p>
+                {sc ? (
+                  <span className={`text-xs font-semibold px-2 py-1 rounded-full w-fit ${sc.className}`}>
+                    {sc.label}
+                  </span>
+                ) : (
+                  <span className="text-xs text-[#444]">—</span>
+                )}
+              </>
+            )
+
+            return row.lease ? (
+              <Link
+                key={row.id}
+                href={`/dashboard/locataires/${row.lease.id}`}
+                className="grid sm:grid-cols-[1fr_1fr_130px_90px] gap-4 items-center px-5 py-4 hover:bg-white/[0.02] transition"
+              >
+                {inner}
               </Link>
+            ) : (
+              <div
+                key={row.id}
+                className="grid sm:grid-cols-[1fr_1fr_130px_90px] gap-4 items-center px-5 py-4"
+              >
+                {inner}
+              </div>
             )
           })}
-          {!displayLeases.length && (
+          {!rows.length && (
             <div className="px-5 py-12 text-center">
-              <p className="text-sm text-[#555]">Aucun locataire{filtre !== 'tous' ? ' pour ce filtre' : ' actif'}</p>
+              <p className="text-sm text-[#555]">
+                {filtre !== 'tous' ? 'Aucun locataire pour ce filtre' : 'Aucun locataire enregistré'}
+              </p>
               <p className="text-xs text-[#444] mt-1">
                 {filtre === 'tous'
-                  ? 'Créez un contrat de location pour commencer'
+                  ? 'Créez votre premier locataire'
                   : 'Modifiez le filtre pour voir tous les locataires'}
               </p>
             </div>
