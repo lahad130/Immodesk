@@ -162,7 +162,7 @@ export default function InspectionDoc(props: InspectionDocProps) {
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Title */}
-        <Text style={styles.title}>RAPPORT D'ETAT DES LIEUX</Text>
+        <Text style={styles.title}>{"RAPPORT D'ÉTAT DES LIEUX"}</Text>
 
         {/* Agency + Type/Ref */}
         <View style={styles.headerRow}>
@@ -278,7 +278,7 @@ export default function InspectionDoc(props: InspectionDocProps) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Document genere le {today}</Text>
+          <Text style={styles.footerText}>Document généré le {today}</Text>
         </View>
       </Page>
     </Document>

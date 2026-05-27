@@ -64,7 +64,7 @@ export default async function InspectionDetailPage({
       {/* Page header */}
       <div>
         <h2 className="text-lg font-semibold text-white">
-          Etat des lieux — {inspection.property?.title ?? 'Bien non assigné'}
+          État des lieux — {inspection.property?.title ?? 'Bien non assigné'}
         </h2>
         <p className="text-sm text-[#666] mt-0.5">
           {formatDate(inspection.inspection_date, { day: 'numeric', month: 'long', year: 'numeric' })}

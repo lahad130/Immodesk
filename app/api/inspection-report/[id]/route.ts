@@ -15,10 +15,10 @@ export async function GET(
     .from('inspections')
     .select(`
       *,
+      agency:agency_id(name, phone, city, country),
       property:property_id(id, title, neighborhood, city),
       lease:lease_id(
-        tenant:tenant_id(full_name, phone),
-        agency:agency_id(name, phone, city, country)
+        tenant:tenant_id(full_name, phone)
       )
     `)
     .eq('id', id)
@@ -28,27 +28,20 @@ export async function GET(
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
 
-  type LeaseJoined = {
-    tenant: { full_name: string; phone: string | null } | null
-    agency: { name: string; phone: string | null; city: string | null; country: string | null } | null
-  }
+  type AgencyJoined = { name: string; phone: string | null; city: string | null; country: string | null } | null
+  type LeaseJoined = { tenant: { full_name: string; phone: string | null } | null } | null
+  type PropertyJoined = { id: string; title: string; neighborhood: string | null; city: string } | null
 
-  type PropertyJoined = {
-    id: string
-    title: string
-    neighborhood: string | null
-    city: string
-  }
-
-  const lease = inspection.lease as LeaseJoined | null
-  const property = inspection.property as PropertyJoined | null
+  const agency = inspection.agency as AgencyJoined
+  const lease = inspection.lease as LeaseJoined
+  const property = inspection.property as PropertyJoined
 
   const props = {
     agency: {
-      name: lease?.agency?.name ?? 'Agence Immobiliere',
-      city: lease?.agency?.city ?? null,
-      country: lease?.agency?.country ?? null,
-      phone: lease?.agency?.phone ?? null,
+      name: agency?.name ?? 'Agence Immobilière',
+      city: agency?.city ?? null,
+      country: agency?.country ?? null,
+      phone: agency?.phone ?? null,
     },
     property: property
       ? {

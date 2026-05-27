@@ -226,7 +226,7 @@ export default function QuittanceDoc(props: QuittanceProps) {
             ) : null}
           </View>
           <View style={styles.refBlock}>
-            <Text style={styles.refLabel}>Reference</Text>
+            <Text style={styles.refLabel}>Référence</Text>
             <Text style={styles.refValue}>N° {shortId}</Text>
           </View>
         </View>
@@ -271,10 +271,10 @@ export default function QuittanceDoc(props: QuittanceProps) {
 
         {/* Payment details */}
         <View style={styles.detailsSection}>
-          <Text style={styles.sectionLabel}>Details du paiement</Text>
+          <Text style={styles.sectionLabel}>Détails du paiement</Text>
 
           <View style={styles.detailRow}>
-            <Text style={styles.detailKey}>Periode</Text>
+            <Text style={styles.detailKey}>Période</Text>
             <Text style={styles.detailValue}>
               {formatMonthYear(payment.due_date)}
             </Text>
@@ -309,7 +309,7 @@ export default function QuittanceDoc(props: QuittanceProps) {
         {/* Footer */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            Document genere le {today}
+            Document généré le {today}
           </Text>
         </View>
       </Page>
