@@ -166,10 +166,10 @@ export default async function DashboardPage() {
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className="text-xs font-medium text-white truncate">
-                      {visit.property?.title ?? 'Bien non défini'}
+                      {visit.property?.title ?? <span className="text-[#555]">Non assigné</span>}
                     </p>
                     <p className="text-xs text-[#666] mt-0.5 truncate">
-                      {visit.lead?.full_name ?? 'Client inconnu'}
+                      {visit.lead?.full_name ?? '—'}
                     </p>
                   </div>
                   <div className="text-right shrink-0">

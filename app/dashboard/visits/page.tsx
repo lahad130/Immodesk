@@ -41,10 +41,10 @@ export default async function VisitsPage() {
 
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-white truncate">
-            {(visit as { property?: { title: string } | null }).property?.title ?? 'Bien non défini'}
+            {(visit as { property?: { title: string } | null }).property?.title ?? <span className="text-[#555]">Non assigné</span>}
           </p>
           <p className="text-xs text-[#666] truncate">
-            {(visit as { lead?: { full_name: string; phone?: string } | null }).lead?.full_name ?? 'Client inconnu'}
+            {(visit as { lead?: { full_name: string; phone?: string } | null }).lead?.full_name ?? '—'}
             {(visit as { lead?: { phone?: string } | null }).lead?.phone && ` · ${(visit as { lead: { phone: string } }).lead.phone}`}
           </p>
         </div>
