@@ -92,8 +92,10 @@ export interface DashboardMetrics {
 
 export type LeaseStatus = 'actif' | 'expire' | 'resilie'
 export type PaymentStatus = 'paye' | 'en_attente' | 'retard'
+export type PaymentMethod = 'especes' | 'orange_money' | 'wave' | 'virement' | 'cheque'
 export type InspectionType = 'entree' | 'sortie'
 export type IncidentStatus = 'ouvert' | 'en_cours' | 'resolu'
+export type DocumentCategory = 'contrat' | 'titre' | 'mandat' | 'bail' | 'quittance' | 'etat_des_lieux' | 'autres'
 
 export interface Tenant {
   id: string
@@ -128,6 +130,7 @@ export interface Payment {
   due_date: string
   paid_date: string | null
   status: PaymentStatus
+  payment_method: PaymentMethod | null
   created_at: string
   // joined
   lease?: Lease | null
@@ -157,5 +160,19 @@ export interface Incident {
   title: string
   description: string | null
   status: IncidentStatus
+  created_at: string
+}
+
+export interface Document {
+  id: string
+  agency_id: string
+  property_id: string | null
+  tenant_id: string | null
+  lease_id: string | null
+  name: string
+  category: DocumentCategory
+  storage_path: string
+  size_bytes: number | null
+  mime_type: string | null
   created_at: string
 }
