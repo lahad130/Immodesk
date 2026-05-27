@@ -96,7 +96,7 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
 
   function isActive(item: (typeof nav)[0]) {
-    return item.exact ? pathname === item.href : pathname.startsWith(item.href)
+    return item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(item.href + '/')
   }
 
   return (
@@ -158,6 +158,8 @@ export default function Sidebar() {
       <div className="border-t border-white/[0.07] p-2 space-y-1">
         <button
           onClick={() => setCollapsed(!collapsed)}
+          aria-label={collapsed ? 'Développer la navigation' : 'Réduire la navigation'}
+          aria-expanded={!collapsed}
           className={`flex items-center gap-3 w-full px-2.5 py-2 rounded-lg text-[#555] hover:text-white hover:bg-white/5 text-sm transition ${collapsed ? 'justify-center' : ''}`}
         >
           <svg

@@ -46,6 +46,7 @@ export default async function LocatairesPage({
         .from('payments')
         .select('lease_id, status, due_date')
         .in('lease_id', leaseIds)
+        // Ordered DESC so first occurrence per lease_id in the array is the most-recent payment
         .order('due_date', { ascending: false })
     : { data: [] }
 
@@ -115,11 +116,11 @@ export default async function LocatairesPage({
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-[#1f1f1f] border border-white/10 flex items-center justify-center text-xs font-semibold text-white shrink-0">
-                    {lease.tenant.full_name.slice(0, 2).toUpperCase()}
+                    {(lease.tenant?.full_name ?? '??').slice(0, 2).toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{lease.tenant.full_name}</p>
-                    <p className="text-xs text-[#666] truncate">{lease.tenant.phone ?? '—'}</p>
+                    <p className="text-sm font-medium text-white truncate">{lease.tenant?.full_name ?? '—'}</p>
+                    <p className="text-xs text-[#666] truncate">{lease.tenant?.phone ?? '—'}</p>
                   </div>
                 </div>
                 <p className="text-sm text-[#888] truncate">

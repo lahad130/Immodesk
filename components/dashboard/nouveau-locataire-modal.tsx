@@ -100,10 +100,17 @@ export default function NouveauLocataireModal() {
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center"
           onClick={(e) => { if (e.target === e.currentTarget) closeModal() }}
+          onKeyDown={(e) => { if (e.key === 'Escape') closeModal() }}
+          tabIndex={-1}
         >
-          <div className="bg-[#171717] border border-white/[0.08] rounded-2xl p-6 w-full max-w-md mx-4">
+          <div
+            className="bg-[#171717] border border-white/[0.08] rounded-2xl p-6 w-full max-w-md mx-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="nouveau-locataire-title"
+          >
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-base font-semibold text-white">Nouveau locataire</h3>
+              <h3 id="nouveau-locataire-title" className="text-base font-semibold text-white">Nouveau locataire</h3>
               <button
                 onClick={closeModal}
                 className="text-[#666] hover:text-white transition"
@@ -117,10 +124,11 @@ export default function NouveauLocataireModal() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm text-[#888] mb-1.5">
+                <label htmlFor="tenant-full-name" className="block text-sm text-[#888] mb-1.5">
                   Nom complet <span className="text-red-400">*</span>
                 </label>
                 <input
+                  id="tenant-full-name"
                   type="text"
                   name="full_name"
                   value={form.full_name}
@@ -128,12 +136,14 @@ export default function NouveauLocataireModal() {
                   placeholder="Ex: Mamadou Diallo"
                   className="bg-[#111] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white w-full focus:outline-none focus:border-[#3ECF8E]/50"
                   required
+                  aria-required="true"
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-[#888] mb-1.5">Téléphone</label>
+                <label htmlFor="tenant-phone" className="block text-sm text-[#888] mb-1.5">Téléphone</label>
                 <input
+                  id="tenant-phone"
                   type="tel"
                   name="phone"
                   value={form.phone}
@@ -144,8 +154,9 @@ export default function NouveauLocataireModal() {
               </div>
 
               <div>
-                <label className="block text-sm text-[#888] mb-1.5">WhatsApp</label>
+                <label htmlFor="tenant-whatsapp" className="block text-sm text-[#888] mb-1.5">WhatsApp</label>
                 <input
+                  id="tenant-whatsapp"
                   type="tel"
                   name="whatsapp"
                   value={form.whatsapp}
@@ -156,8 +167,9 @@ export default function NouveauLocataireModal() {
               </div>
 
               <div>
-                <label className="block text-sm text-[#888] mb-1.5">Email</label>
+                <label htmlFor="tenant-email" className="block text-sm text-[#888] mb-1.5">Email</label>
                 <input
+                  id="tenant-email"
                   type="email"
                   name="email"
                   value={form.email}
