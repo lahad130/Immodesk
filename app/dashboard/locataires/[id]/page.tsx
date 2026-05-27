@@ -4,6 +4,7 @@ import type { Tenant, Lease, Payment, Incident } from '@/lib/types'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ResolveIncidentButton from '@/components/dashboard/resolve-incident-button'
+import EnregistrerPaiementModal from '@/components/dashboard/enregistrer-paiement-modal'
 
 const paymentStatusConfig = {
   paye: { label: 'Payé', className: 'text-[#3ECF8E] bg-[#3ECF8E]/10' },
@@ -80,9 +81,12 @@ export default async function LocataireDetailPage({
         <div className="space-y-5">
           {/* Payments section */}
           <div className="bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-white/[0.07]">
-              <h3 className="text-sm font-semibold text-white">Historique des paiements</h3>
-              <p className="text-xs text-[#666] mt-0.5">{(payments ?? []).length} paiement{(payments ?? []).length !== 1 ? 's' : ''}</p>
+            <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07]">
+              <div>
+                <h3 className="text-sm font-semibold text-white">Historique des paiements</h3>
+                <p className="text-xs text-[#666] mt-0.5">{(payments ?? []).length} paiement{(payments ?? []).length !== 1 ? 's' : ''}</p>
+              </div>
+              <EnregistrerPaiementModal leaseId={id} monthlyRent={lease.monthly_rent} />
             </div>
 
             {(payments ?? []).length === 0 ? (
@@ -97,6 +101,7 @@ export default async function LocataireDetailPage({
                       <th className="px-5 py-3 text-left text-xs text-[#555] font-semibold uppercase tracking-wide">Période</th>
                       <th className="px-5 py-3 text-left text-xs text-[#555] font-semibold uppercase tracking-wide">Montant</th>
                       <th className="px-5 py-3 text-left text-xs text-[#555] font-semibold uppercase tracking-wide">Statut</th>
+                      <th className="px-5 py-3 text-left text-xs text-[#555] font-semibold uppercase tracking-wide">Méthode</th>
                       <th className="px-5 py-3 text-left text-xs text-[#555] font-semibold uppercase tracking-wide">Quittance</th>
                     </tr>
                   </thead>
@@ -115,6 +120,14 @@ export default async function LocataireDetailPage({
                             <span className={`text-xs font-semibold px-2 py-1 rounded-full ${sc.className}`}>
                               {sc.label}
                             </span>
+                          </td>
+                          <td className="px-5 py-3.5 text-xs text-[#666]">
+                            {payment.payment_method === 'orange_money' ? 'Orange Money'
+                              : payment.payment_method === 'wave' ? 'Wave'
+                              : payment.payment_method === 'especes' ? 'Espèces'
+                              : payment.payment_method === 'virement' ? 'Virement'
+                              : payment.payment_method === 'cheque' ? 'Chèque'
+                              : <span className="text-[#444]">—</span>}
                           </td>
                           <td className="px-5 py-3.5">
                             <div className="flex items-center gap-3">
