@@ -65,6 +65,7 @@ export async function GET(
       due_date: String(payment.due_date ?? ''),
       paid_date: payment.paid_date ? String(payment.paid_date) : null,
       status: String(payment.status ?? 'en_attente'),
+      payment_method: payment.payment_method ? String(payment.payment_method) : null,
     },
     lease: {
       start_date: lease.start_date,

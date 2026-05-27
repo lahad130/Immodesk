@@ -23,6 +23,7 @@ export interface QuittanceProps {
     due_date: string
     paid_date: string | null
     status: 'paye' | 'en_attente' | 'retard' | string
+    payment_method: string | null
   }
   lease: {
     start_date: string
@@ -293,6 +294,20 @@ export default function QuittanceDoc(props: QuittanceProps) {
               {formatFCFAPDF(payment.amount_fcfa)}
             </Text>
           </View>
+
+          {payment.payment_method ? (
+            <View style={styles.detailRow}>
+              <Text style={styles.detailKey}>Moyen</Text>
+              <Text style={styles.detailValue}>
+                {payment.payment_method === 'orange_money' ? 'Orange Money'
+                  : payment.payment_method === 'wave' ? 'Wave'
+                  : payment.payment_method === 'especes' ? 'Espèces'
+                  : payment.payment_method === 'virement' ? 'Virement'
+                  : payment.payment_method === 'cheque' ? 'Chèque'
+                  : payment.payment_method}
+              </Text>
+            </View>
+          ) : null}
         </View>
 
         {/* Divider */}
