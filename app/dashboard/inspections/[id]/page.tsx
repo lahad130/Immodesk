@@ -142,7 +142,7 @@ export default async function InspectionDetailPage({
               <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-1.5">Type</p>
               {inspection.type === 'entree' ? (
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full text-[#3ECF8E] bg-[#3ECF8E]/10">
-                  Entree
+                  Entrée
                 </span>
               ) : (
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full text-orange-400 bg-orange-500/10">
