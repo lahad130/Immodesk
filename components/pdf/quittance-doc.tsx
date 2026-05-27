@@ -3,7 +3,8 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 export interface QuittanceProps {
   agency: {
     name: string
-    address: string | null
+    city: string | null
+    country: string | null
     phone: string | null
   }
   tenant: {
@@ -21,7 +22,7 @@ export interface QuittanceProps {
     amount_fcfa: number
     due_date: string
     paid_date: string | null
-    status: string
+    status: 'paye' | 'en_attente' | 'retard' | string
   }
   lease: {
     start_date: string
@@ -183,8 +184,10 @@ export default function QuittanceDoc(props: QuittanceProps) {
   const statusLabel = (() => {
     switch (payment.status) {
       case 'paye':
-        return (
-          <Text style={styles.statusPaye}>PAYE</Text>
+        return payment.paid_date ? (
+          <Text style={styles.statusPaye}>PAYÉ le {formatDatePDF(payment.paid_date)}</Text>
+        ) : (
+          <Text style={styles.statusPaye}>PAYÉ</Text>
         )
       case 'en_attente':
         return <Text style={styles.statusEnAttente}>EN ATTENTE</Text>
@@ -213,8 +216,10 @@ export default function QuittanceDoc(props: QuittanceProps) {
         <View style={styles.headerRow}>
           <View style={styles.agencyBlock}>
             <Text style={styles.agencyName}>{agency.name}</Text>
-            {agency.address ? (
-              <Text style={styles.agencyDetail}>{agency.address}</Text>
+            {(agency.city || agency.country) ? (
+              <Text style={styles.agencyDetail}>
+                {[agency.city, agency.country].filter(Boolean).join(', ')}
+              </Text>
             ) : null}
             {agency.phone ? (
               <Text style={styles.agencyDetail}>{agency.phone}</Text>
@@ -296,11 +301,6 @@ export default function QuittanceDoc(props: QuittanceProps) {
         {/* Status */}
         <View>
           {statusLabel}
-          {payment.status === 'paye' && payment.paid_date ? (
-            <Text style={styles.paidDateText}>
-              le {formatDatePDF(payment.paid_date)}
-            </Text>
-          ) : null}
         </View>
 
         {/* Divider */}

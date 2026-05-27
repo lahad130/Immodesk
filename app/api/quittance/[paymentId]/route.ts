@@ -19,7 +19,7 @@ export async function GET(
         *,
         tenant:tenant_id(*),
         property:property_id(id, title, neighborhood, city),
-        agency:agency_id(name, phone)
+        agency:agency_id(name, phone, city, country)
       )
     `)
     .eq('id', paymentId)
@@ -35,7 +35,7 @@ export async function GET(
     monthly_rent: number
     tenant: { full_name: string; phone: string | null; email: string | null } | null
     property: { title: string; neighborhood: string | null; city: string } | null
-    agency: { name: string; phone: string | null } | null
+    agency: { name: string; phone: string | null; city: string | null; country: string | null } | null
   }
 
   const lease = payment.lease as LeaseJoined
@@ -43,7 +43,8 @@ export async function GET(
   const props = {
     agency: {
       name: lease.agency?.name ?? 'Agence Immobiliere',
-      address: null as string | null,
+      city: lease.agency?.city ?? null,
+      country: lease.agency?.country ?? null,
       phone: lease.agency?.phone ?? null,
     },
     tenant: {
@@ -59,11 +60,11 @@ export async function GET(
         }
       : null,
     payment: {
-      id: payment.id as string,
-      amount_fcfa: payment.amount_fcfa as number,
-      due_date: payment.due_date as string,
-      paid_date: payment.paid_date as string | null,
-      status: payment.status as string,
+      id: String(payment.id ?? ''),
+      amount_fcfa: Number(payment.amount_fcfa ?? 0),
+      due_date: String(payment.due_date ?? ''),
+      paid_date: payment.paid_date ? String(payment.paid_date) : null,
+      status: String(payment.status ?? 'en_attente'),
     },
     lease: {
       start_date: lease.start_date,
@@ -73,9 +74,15 @@ export async function GET(
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const element = React.createElement(QuittanceDoc, props) as any
-
-  const buffer = await renderToBuffer(element)
+  let buffer: any
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const element = React.createElement(QuittanceDoc, props) as any
+    buffer = await renderToBuffer(element)
+  } catch (err) {
+    console.error('PDF generation error:', err)
+    return NextResponse.json({ error: 'PDF generation failed' }, { status: 500 })
+  }
 
   return new NextResponse(new Uint8Array(buffer), {
     headers: {
