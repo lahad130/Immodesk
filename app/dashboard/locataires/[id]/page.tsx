@@ -3,6 +3,7 @@ import { formatFCFA, formatDate } from '@/lib/format'
 import type { Tenant, Lease, Payment, Incident } from '@/lib/types'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import ResolveIncidentButton from '@/components/dashboard/resolve-incident-button'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
@@ -181,6 +182,9 @@ export default async function LocataireDetailPage({
                           )}
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
+                          {incident.status !== 'resolu' && (
+                            <ResolveIncidentButton incidentId={incident.id} />
+                          )}
                           <span className={`text-xs font-semibold px-2 py-1 rounded-full ${sc.className}`}>
                             {sc.label}
                           </span>
