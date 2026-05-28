@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ResolveIncidentButton from '@/components/dashboard/resolve-incident-button'
 import EnregistrerPaiementModal from '@/components/dashboard/enregistrer-paiement-modal'
+import NouveauBailModal from '@/components/dashboard/nouveau-bail-modal'
 
 const paymentStatusConfig = {
   paye: { label: 'Payé', className: 'text-[#3ECF8E] bg-[#3ECF8E]/10' },
@@ -24,8 +25,7 @@ const incidentStatusConfig = {
   resolu: { label: 'Résolu', className: 'text-[#3ECF8E] bg-[#3ECF8E]/10' },
 } as const
 
-type LeaseDetail = Lease & {
-  tenant: Tenant
+type LeaseWithProperty = Lease & {
   property: { id: string; title: string; neighborhood: string | null; city: string } | null
 }
 
@@ -34,38 +34,55 @@ export default async function LocataireDetailPage({
 }: {
   params: Promise<{ id: string }>
 }) {
-  const { id } = await params
+  const { id: tenantId } = await params
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
   const supabase = await createClient()
 
-  const { data: leaseRaw } = await supabase
-    .from('leases')
-    .select('*, tenant:tenant_id(*), property:property_id(id, title, neighborhood, city)')
-    .eq('id', id)
+  // Fetch tenant
+  const { data: tenantRaw } = await supabase
+    .from('tenants')
+    .select('*')
+    .eq('id', tenantId)
     .single()
 
-  if (!leaseRaw) {
-    notFound()
-  }
+  if (!tenantRaw) notFound()
+  const tenant = tenantRaw as Tenant
 
-  const lease = leaseRaw as LeaseDetail
+  // Fetch active lease for this tenant
+  const { data: leaseRaw } = await supabase
+    .from('leases')
+    .select('*, property:property_id(id, title, neighborhood, city)')
+    .eq('tenant_id', tenantId)
+    .eq('status', 'actif')
+    .maybeSingle()
 
-  if (!lease.tenant) notFound()
+  const lease = leaseRaw as LeaseWithProperty | null
 
+  // Fetch properties for the NouveauBailModal (only when no active lease)
+  const { data: properties } = !lease
+    ? await supabase
+        .from('properties')
+        .select('id, title, neighborhood, city')
+        .eq('status', 'disponible')
+        .order('title')
+    : { data: [] }
+
+  // Fetch payments and incidents in parallel (only if there's a lease)
   const [{ data: payments }, { data: incidents }] = await Promise.all([
-    supabase.from('payments').select('*').eq('lease_id', id).order('due_date', { ascending: false }),
-    lease.property_id
+    lease
+      ? supabase.from('payments').select('*').eq('lease_id', lease.id).order('due_date', { ascending: false })
+      : Promise.resolve({ data: [] as Payment[] }),
+    lease?.property_id
       ? supabase.from('incidents').select('*').eq('property_id', lease.property_id).order('created_at', { ascending: false })
       : Promise.resolve({ data: [] as Incident[] }),
   ])
 
-  const tenant = lease.tenant
   const initials = (tenant.full_name ?? '??').slice(0, 2).toUpperCase()
   const whatsapp = (tenant.whatsapp ?? '').replace(/\D/g, '')
 
   return (
     <div className="max-w-5xl space-y-5">
-      {/* Back button */}
+      {/* Back */}
       <Link
         href="/dashboard/locataires"
         className="text-[#666] hover:text-white text-sm flex items-center gap-1.5 w-fit"
@@ -84,12 +101,25 @@ export default async function LocataireDetailPage({
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07]">
               <div>
                 <h3 className="text-sm font-semibold text-white">Historique des paiements</h3>
-                <p className="text-xs text-[#666] mt-0.5">{(payments ?? []).length} paiement{(payments ?? []).length !== 1 ? 's' : ''}</p>
+                <p className="text-xs text-[#666] mt-0.5">
+                  {(payments ?? []).length} paiement{(payments ?? []).length !== 1 ? 's' : ''}
+                </p>
               </div>
-              <EnregistrerPaiementModal leaseId={id} monthlyRent={lease.monthly_rent} />
+              {lease && (
+                <EnregistrerPaiementModal
+                  leaseId={lease.id}
+                  tenantId={tenantId}
+                  monthlyRent={lease.monthly_rent}
+                />
+              )}
             </div>
 
-            {(payments ?? []).length === 0 ? (
+            {!lease ? (
+              <div className="px-5 py-10 text-center">
+                <p className="text-sm text-[#555]">Aucun bail actif</p>
+                <p className="text-xs text-[#444] mt-1">Créez un bail pour enregistrer des paiements</p>
+              </div>
+            ) : (payments ?? []).length === 0 ? (
               <div className="px-5 py-10 text-center">
                 <p className="text-sm text-[#555]">Aucun paiement enregistré</p>
               </div>
@@ -110,12 +140,8 @@ export default async function LocataireDetailPage({
                       const sc = paymentStatusConfig[payment.status as keyof typeof paymentStatusConfig] ?? paymentStatusConfig.en_attente
                       return (
                         <tr key={payment.id} className="hover:bg-white/[0.02] transition">
-                          <td className="px-5 py-3.5 text-[#888]">
-                            {formatDate(payment.due_date)}
-                          </td>
-                          <td className="px-5 py-3.5 font-semibold text-white">
-                            {formatFCFA(payment.amount_fcfa)}
-                          </td>
+                          <td className="px-5 py-3.5 text-[#888]">{formatDate(payment.due_date)}</td>
+                          <td className="px-5 py-3.5 font-semibold text-white">{formatFCFA(payment.amount_fcfa)}</td>
                           <td className="px-5 py-3.5">
                             <span className={`text-xs font-semibold px-2 py-1 rounded-full ${sc.className}`}>
                               {sc.label}
@@ -165,13 +191,14 @@ export default async function LocataireDetailPage({
             )}
           </div>
 
-          {/* Incidents section */}
+          {/* Incidents */}
           <div className="bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-white/[0.07]">
               <h3 className="text-sm font-semibold text-white">Incidents</h3>
-              <p className="text-xs text-[#666] mt-0.5">{(incidents ?? []).length} incident{(incidents ?? []).length !== 1 ? 's' : ''}</p>
+              <p className="text-xs text-[#666] mt-0.5">
+                {(incidents ?? []).length} incident{(incidents ?? []).length !== 1 ? 's' : ''}
+              </p>
             </div>
-
             {(incidents ?? []).length === 0 ? (
               <div className="px-5 py-10 text-center">
                 <p className="text-sm text-[#555]">Aucun incident signalé</p>
@@ -191,7 +218,7 @@ export default async function LocataireDetailPage({
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
                           {incident.status !== 'resolu' && (
-                            <ResolveIncidentButton incidentId={incident.id} leaseId={id} />
+                            <ResolveIncidentButton incidentId={incident.id} tenantId={tenantId} />
                           )}
                           <span className={`text-xs font-semibold px-2 py-1 rounded-full ${sc.className}`}>
                             {sc.label}
@@ -220,7 +247,6 @@ export default async function LocataireDetailPage({
                 <p className="text-xs text-[#666] mt-0.5">Locataire</p>
               </div>
             </div>
-
             <div className="space-y-2.5">
               {tenant.phone && (
                 <div className="flex items-center gap-2.5">
@@ -230,7 +256,6 @@ export default async function LocataireDetailPage({
                   <span className="text-sm text-[#888]">{tenant.phone}</span>
                 </div>
               )}
-
               {tenant.email && (
                 <div className="flex items-center gap-2.5">
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#555] shrink-0">
@@ -240,7 +265,6 @@ export default async function LocataireDetailPage({
                   <span className="text-sm text-[#888] truncate">{tenant.email}</span>
                 </div>
               )}
-
               {tenant.whatsapp && (
                 <div className="flex items-center gap-2.5 pt-1">
                   <a
@@ -259,65 +283,73 @@ export default async function LocataireDetailPage({
             </div>
           </div>
 
-          {/* Lease card */}
-          <div className="bg-[#171717] border border-white/[0.08] rounded-2xl p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-white">Contrat actif</h3>
-              {(() => {
-                const sc = leaseStatusConfig[lease.status as keyof typeof leaseStatusConfig] ?? leaseStatusConfig.expire
-                return (
-                  <span className={`text-xs font-semibold px-2 py-1 rounded-full ${sc.className}`}>
-                    {sc.label}
-                  </span>
-                )
-              })()}
-            </div>
-
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Bien</p>
-                <p className="text-sm text-white">{lease.property?.title ?? 'Non assigné'}</p>
-                {lease.property?.neighborhood && (
-                  <p className="text-xs text-[#666] mt-0.5">
-                    {lease.property.neighborhood}, {lease.property.city}
-                  </p>
-                )}
+          {/* Lease card or Nouveau bail */}
+          {lease ? (
+            <div className="bg-[#171717] border border-white/[0.08] rounded-2xl p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-white">Contrat actif</h3>
+                {(() => {
+                  const sc = leaseStatusConfig[lease.status as keyof typeof leaseStatusConfig] ?? leaseStatusConfig.expire
+                  return (
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${sc.className}`}>
+                      {sc.label}
+                    </span>
+                  )
+                })()}
               </div>
-
-              <div>
-                <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Période</p>
-                <p className="text-sm text-[#888]">
-                  {formatDate(lease.start_date)} — {formatDate(lease.end_date)}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between">
+              <div className="space-y-3">
                 <div>
-                  <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Loyer mensuel</p>
-                  <p className="text-sm font-semibold text-[#3ECF8E]">{formatFCFA(lease.monthly_rent)}</p>
+                  <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Bien</p>
+                  <p className="text-sm text-white">{lease.property?.title ?? 'Non assigné'}</p>
+                  {lease.property?.neighborhood && (
+                    <p className="text-xs text-[#666] mt-0.5">
+                      {lease.property.neighborhood}, {lease.property.city}
+                    </p>
+                  )}
                 </div>
-                <div className="text-right">
-                  <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Caution</p>
-                  <p className="text-sm text-[#888]">{formatFCFA(lease.deposit)}</p>
+                <div>
+                  <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Période</p>
+                  <p className="text-sm text-[#888]">
+                    {formatDate(lease.start_date)} — {formatDate(lease.end_date)}
+                  </p>
                 </div>
-              </div>
-
-              <div className="pt-2 border-t border-white/[0.07] mt-1">
-                <a
-                  href={`/api/bail/${lease.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 w-full px-3 py-2 bg-white/[0.04] hover:bg-white/[0.07] text-[#888] hover:text-white text-xs font-medium rounded-xl transition border border-white/[0.08]"
-                >
-                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 shrink-0">
-                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                  </svg>
-                  Générer le bail PDF
-                </a>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Loyer mensuel</p>
+                    <p className="text-sm font-semibold text-[#3ECF8E]">{formatFCFA(lease.monthly_rent)}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-[#555] uppercase tracking-wide font-semibold mb-0.5">Caution</p>
+                    <p className="text-sm text-[#888]">{formatFCFA(lease.deposit)}</p>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-white/[0.07] mt-1">
+                  <a
+                    href={`/api/bail/${lease.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 w-full px-3 py-2 bg-white/[0.04] hover:bg-white/[0.07] text-[#888] hover:text-white text-xs font-medium rounded-xl transition border border-white/[0.08]"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 shrink-0">
+                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    Générer le bail PDF
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="bg-[#171717] border border-white/[0.08] rounded-2xl p-5">
+              <h3 className="text-sm font-semibold text-white mb-3">Contrat de bail</h3>
+              <p className="text-xs text-[#555] mb-4">Aucun bail actif pour ce locataire.</p>
+              <NouveauBailModal
+                tenantId={tenantId}
+                tenantName={tenant.full_name}
+                properties={(properties ?? []) as { id: string; title: string; neighborhood: string | null; city: string }[]}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

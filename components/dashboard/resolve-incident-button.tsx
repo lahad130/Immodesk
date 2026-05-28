@@ -5,10 +5,10 @@ import { resolveIncident } from '@/app/dashboard/locataires/[id]/actions'
 
 export default function ResolveIncidentButton({
   incidentId,
-  leaseId,
+  tenantId,
 }: {
   incidentId: string
-  leaseId: string
+  tenantId: string
 }) {
   const [pending, startTransition] = useTransition()
   const [failed, setFailed] = useState(false)
@@ -18,7 +18,7 @@ export default function ResolveIncidentButton({
       onClick={() =>
         startTransition(async () => {
           try {
-            await resolveIncident(incidentId, leaseId)
+            await resolveIncident(incidentId, tenantId)
           } catch {
             setFailed(true)
           }

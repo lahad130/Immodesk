@@ -162,21 +162,14 @@ export default async function LocatairesPage({
               </>
             )
 
-            return row.lease ? (
+            return (
               <Link
                 key={row.id}
-                href={`/dashboard/locataires/${row.lease.id}`}
+                href={`/dashboard/locataires/${row.id}`}
                 className="grid sm:grid-cols-[1fr_1fr_130px_90px] gap-4 items-center px-5 py-4 hover:bg-white/[0.02] transition"
               >
                 {inner}
               </Link>
-            ) : (
-              <div
-                key={row.id}
-                className="grid sm:grid-cols-[1fr_1fr_130px_90px] gap-4 items-center px-5 py-4"
-              >
-                {inner}
-              </div>
             )
           })}
           {!rows.length && (
