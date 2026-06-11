@@ -115,7 +115,7 @@ export default async function OccupationPage() {
         ) : (
           <div className="divide-y divide-white/[0.05]">
             {(latePayments as LatePaymentRow[]).map((p) => {
-              const daysLate = Math.floor((Date.now() - new Date(p.due_date).getTime()) / 86_400_000)
+              const daysLate = Math.floor((now.getTime() - new Date(p.due_date).getTime()) / 86_400_000)
               const phone = p.lease?.tenant?.whatsapp ?? ''
               const msg = encodeURIComponent(
                 `Bonjour ${p.lease?.tenant?.full_name ?? ''}, votre loyer de ${formatFCFA(p.amount_fcfa)} pour ${p.lease?.property?.title ?? 'votre bien'} est en retard de ${daysLate} jour(s). Merci de régulariser.`
@@ -156,7 +156,7 @@ export default async function OccupationPage() {
           {(rentalProperties as Property[] ?? []).map((prop) => {
             const lease = (activeLeases ?? []).find((l) => l.property_id === prop.id)
             const endDate = lease ? new Date(lease.end_date) : null
-            const daysToEnd = endDate ? Math.floor((endDate.getTime() - Date.now()) / 86_400_000) : null
+            const daysToEnd = endDate ? Math.floor((endDate.getTime() - now.getTime()) / 86_400_000) : null
             const expiringSoon = daysToEnd !== null && daysToEnd <= 30 && daysToEnd >= 0
             return (
               <div key={prop.id} className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/[0.02] transition">

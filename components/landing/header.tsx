@@ -52,7 +52,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-6">
             <a href="#features" className="text-sm text-[#888] hover:text-white transition">Fonctionnalités</a>
             <a href="#pricing" className="text-sm text-[#888] hover:text-white transition">Tarifs</a>
-            <a href="#about" className="text-sm text-[#888] hover:text-white transition">À propos</a>
+            <a href="#faq" className="text-sm text-[#888] hover:text-white transition">FAQ</a>
           </nav>
 
           {/* Auth */}
@@ -120,7 +120,7 @@ export default function Header() {
           <div className="md:hidden border-t border-white/[0.08] py-4 space-y-1">
             <a href="#features" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>Fonctionnalités</a>
             <a href="#pricing" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>Tarifs</a>
-            <a href="#about" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>À propos</a>
+            <a href="#faq" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>FAQ</a>
             {!user && (
               <Link href="/login" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>Connexion</Link>
             )}

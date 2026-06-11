@@ -12,10 +12,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://immodesk.vercel.app";
+
 export const metadata: Metadata = {
-  title: "ImmoDesk — CRM Immobilier pour l'Afrique de l'Ouest",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "ImmoDesk — Logiciel de gestion locative au Sénégal",
+    template: "%s — ImmoDesk",
+  },
   description:
-    "Gérez vos biens, clients et transactions immobilières depuis une seule plateforme. Conçu pour les agences d'Afrique de l'Ouest.",
+    "Suivez vos loyers, relancez les retards sur WhatsApp et générez baux et quittances PDF conformes à la loi 77-60. La gestion locative simple pour les agences immobilières du Sénégal et d'Afrique de l'Ouest.",
+  keywords: [
+    "gestion locative Sénégal",
+    "logiciel immobilier Dakar",
+    "gestion immobilière Afrique de l'Ouest",
+    "quittance de loyer PDF",
+    "bail loi 77-60",
+    "suivi des loyers",
+    "CRM immobilier FCFA",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "fr_SN",
+    url: siteUrl,
+    siteName: "ImmoDesk",
+    title: "ImmoDesk — Logiciel de gestion locative au Sénégal",
+    description:
+      "Loyers, baux, quittances PDF et relances WhatsApp : la gestion locative simple pour les agences immobilières du Sénégal.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ImmoDesk — Logiciel de gestion locative au Sénégal",
+    description:
+      "Loyers, baux, quittances PDF et relances WhatsApp : la gestion locative simple pour les agences immobilières du Sénégal.",
+  },
 };
 
 export default function RootLayout({

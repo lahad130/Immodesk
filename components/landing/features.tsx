@@ -2,20 +2,20 @@ const features = [
   {
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V10.5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
-    title: 'Gestion des biens',
-    description: 'Centralisez tous vos biens immobiliers avec photos, documents et historique complet. Mise à jour en temps réel.',
+    title: 'Suivi des loyers',
+    description: 'Visualisez d\'un coup d\'œil qui a payé, qui est en attente et qui est en retard. Espèces, Wave, Orange Money, virement ou chèque.',
   },
   {
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
       </svg>
     ),
-    title: 'Suivi des clients',
-    description: 'Gardez un œil sur chaque prospect et client. Historique des interactions, préférences et pipeline de vente.',
+    title: 'Relances WhatsApp',
+    description: 'Relancez les locataires en retard en un clic avec un message WhatsApp pré-rédigé. Fini les appels qui restent sans réponse.',
   },
   {
     icon: (
@@ -23,35 +23,35 @@ const features = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
     ),
-    title: 'Gestion des contrats',
-    description: 'Créez, gérez et signez vos contrats de vente et de location directement depuis la plateforme.',
+    title: 'Bail conforme loi 77-60',
+    description: 'Générez un contrat de location sénégalais en PDF, prêt à signer, avec les informations de votre agence, du bailleur et du locataire.',
   },
   {
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 14l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
       </svg>
     ),
-    title: 'Statistiques avancées',
-    description: 'Tableaux de bord en temps réel : revenus, taux de conversion, performance des agents en FCFA.',
+    title: 'Quittances PDF automatiques',
+    description: 'Chaque paiement enregistré peut générer sa quittance de loyer en PDF, à envoyer au locataire en une seconde.',
   },
   {
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
       </svg>
     ),
-    title: 'Collaboration d\'équipe',
-    description: 'Attribuez des biens aux agents, définissez des rôles et gérez les permissions de votre équipe.',
+    title: 'États des lieux',
+    description: 'Réalisez vos états des lieux d\'entrée et de sortie avec photos, et exportez le rapport en PDF pour le dossier du locataire.',
   },
   {
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
       </svg>
     ),
-    title: 'Notifications automatiques',
-    description: 'Alertes par SMS et email pour les visites, expirations de contrat et nouvelles correspondances.',
+    title: 'Documents centralisés',
+    description: 'Contrats, titres de propriété, mandats, baux et quittances stockés en sécurité et accessibles depuis n\'importe où.',
   },
 ]
 
@@ -62,10 +62,11 @@ export default function Features() {
         <div className="text-center mb-14">
           <p className="text-sm font-medium text-[#3ECF8E] mb-3">Fonctionnalités</p>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Tout ce dont votre agence a besoin
+            Toute votre gestion locative, au même endroit
           </h2>
           <p className="mt-4 text-[#888] max-w-xl mx-auto">
-            Une suite complète d&apos;outils pensés pour le marché immobilier ouest-africain.
+            Remplacez les cahiers, fichiers Excel et reçus papier par un outil pensé
+            pour le marché immobilier sénégalais.
           </p>
         </div>
 

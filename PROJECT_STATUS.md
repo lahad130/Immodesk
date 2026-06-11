@@ -1,6 +1,19 @@
 # ImmoDesk — État du projet
 
-> Dernière mise à jour : 26 mai 2026
+> Dernière mise à jour : 11 juin 2026
+
+---
+
+## ⚠️ Actions requises pour activer les dernières fonctionnalités
+
+1. **Migration onboarding** : exécuter `supabase/migrations/20260611000000_onboarding_agency.sql`
+   dans le SQL Editor de Supabase. Sans elle, les nouveaux inscrits ne peuvent pas créer leur agence.
+2. **Variables d'environnement Vercel** (optionnelles mais recommandées) :
+   - `NEXT_PUBLIC_WHATSAPP_NUMBER` : numéro WhatsApp business au format international sans `+`
+     (ex : `221770000000`). Active les boutons « Demander une démo », « Contacter l'équipe »
+     et le bouton WhatsApp flottant sur la landing.
+   - `NEXT_PUBLIC_SITE_URL` : URL de production (ex : `https://immodesk.vercel.app`).
+     Utilisée pour le SEO (Open Graph, sitemap, robots).
 
 ---
 
@@ -112,6 +125,23 @@ proxy.ts                      # Middleware Next.js 16 (protection /dashboard)
 
 ---
 
+## Fait le 11 juin 2026 (préparation lancement / premiers clients)
+
+- [x] **Multi-agences / onboarding agence** : un nouvel inscrit est redirigé vers `/onboarding`
+      où il crée son agence (RPC `create_agency_for_current_user`, SECURITY DEFINER, idempotente,
+      le créateur devient `admin`). Le layout dashboard redirige vers `/onboarding` si le profil
+      n'a pas d'`agency_id` ; le middleware protège `/onboarding`.
+- [x] **Landing page repositionnée gestion locative** : hero, features, mockup réécrits autour
+      des vraies fonctionnalités (suivi loyers, relances WhatsApp, bail loi 77-60, quittances PDF,
+      états des lieux, documents). Fausse preuve sociale « +200 agences » supprimée.
+- [x] **Section FAQ** (objections prospects : gratuité, conformité loi 77-60, Wave/Orange Money,
+      sécurité, mobile, formation).
+- [x] **CTA WhatsApp** : bouton flottant + « Demander une démo » + plan Entreprise,
+      activés via `NEXT_PUBLIC_WHATSAPP_NUMBER`.
+- [x] **SEO** : métadonnées complètes (title template, keywords, Open Graph, Twitter),
+      `robots.txt` et `sitemap.xml` générés, dashboard exclu de l'indexation.
+- [x] Lint : 0 erreur (fix `Date.now()` page occupation, `Math.random()` agent IA).
+
 ## Ce qui reste à faire (prochaines sessions)
 
 - [ ] Formulaire d'ajout/édition de lead
@@ -119,7 +149,7 @@ proxy.ts                      # Middleware Next.js 16 (protection /dashboard)
 - [ ] Filtres et recherche sur la liste des leads
 - [ ] Planification de visite (formulaire)
 - [ ] Intégration vraie IA (Claude API) dans Agent IA
-- [ ] Upload de documents (Supabase Storage)
-- [ ] Multi-agences / onboarding agence
-- [ ] Page profil utilisateur
+- [ ] Page profil utilisateur / page paramètres agence (modifier nom, téléphone, ville)
+- [ ] Invitation de collaborateurs dans une agence (multi-utilisateurs)
 - [ ] Notifications par email/SMS
+- [ ] Vider les données seed de démo ou les réserver à un compte démo dédié

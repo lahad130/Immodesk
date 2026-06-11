@@ -34,10 +34,11 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims()
   const user = data?.claims
 
-  // Only protect dashboard routes — landing page and auth routes are public.
+  // Only protect dashboard and onboarding routes — landing page and auth routes are public.
   if (
     !user &&
-    request.nextUrl.pathname.startsWith('/dashboard')
+    (request.nextUrl.pathname.startsWith('/dashboard') ||
+      request.nextUrl.pathname.startsWith('/onboarding'))
   ) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'

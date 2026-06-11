@@ -1,4 +1,8 @@
 import Link from 'next/link'
+import { whatsappLink } from '@/lib/contact'
+
+const contactHref =
+  whatsappLink('Bonjour, je suis intéressé par le plan Entreprise d’ImmoDesk.') ?? '/signup'
 
 const plans = [
   {
@@ -42,7 +46,7 @@ const plans = [
     period: '/mois',
     description: 'Pour les grandes agences et réseaux.',
     cta: 'Contacter l\'équipe',
-    ctaHref: '/signup',
+    ctaHref: contactHref,
     featured: false,
     features: [
       'Tout dans Pro',
@@ -119,16 +123,31 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <Link
-                href={plan.ctaHref}
-                className={`w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-center transition ${
-                  plan.featured
-                    ? 'bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 text-black'
-                    : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'
-                }`}
-              >
-                {plan.cta}
-              </Link>
+              {plan.ctaHref.startsWith('http') ? (
+                <a
+                  href={plan.ctaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-center transition ${
+                    plan.featured
+                      ? 'bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 text-black'
+                      : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'
+                  }`}
+                >
+                  {plan.cta}
+                </a>
+              ) : (
+                <Link
+                  href={plan.ctaHref}
+                  className={`w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-center transition ${
+                    plan.featured
+                      ? 'bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 text-black'
+                      : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'
+                  }`}
+                >
+                  {plan.cta}
+                </Link>
+              )}
             </div>
           ))}
         </div>

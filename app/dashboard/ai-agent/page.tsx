@@ -123,7 +123,7 @@ export default function AIAgentPage() {
       const reply: Message = { role: 'assistant', content: getResponse(text), ts: new Date() }
       setMessages((prev) => [...prev, reply])
       setLoading(false)
-    }, 900 + Math.random() * 600)
+    }, 1200)
   }
 
   return (
