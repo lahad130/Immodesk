@@ -70,8 +70,8 @@ export default async function OccupationPage() {
   return (
     <div className="space-y-6 max-w-7xl">
       <div>
-        <h2 className="text-lg font-semibold text-white">Taux d&apos;occupation</h2>
-        <p className="text-sm text-[#888] mt-0.5">
+        <h2 className="text-lg font-semibold text-[#181818]">Taux d&apos;occupation</h2>
+        <p className="text-sm text-[#62605B] mt-0.5">
           {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
         </p>
       </div>
@@ -84,36 +84,36 @@ export default async function OccupationPage() {
           { label: 'Revenus encaissés', value: formatFCFA(encaisse), sub: 'Ce mois', positive: true },
           { label: 'Revenus attendus', value: formatFCFA(attendu), sub: encaisse < attendu ? `Écart : ${formatFCFA(attendu - encaisse)}` : 'Objectif atteint', positive: encaisse >= attendu },
         ].map((m) => (
-          <div key={m.label} className="bg-[#171717] border border-white/[0.08] rounded-2xl p-4 lg:p-5">
-            <p className="text-2xl font-bold text-white mb-1">{m.value}</p>
-            <p className="text-xs text-[#666]">{m.label}</p>
-            <p className={`text-xs mt-1 font-medium ${m.positive ? 'text-[#3ECF8E]' : 'text-red-400'}`}>{m.sub}</p>
+          <div key={m.label} className="bg-white border border-[#181818]/[0.08] rounded-2xl p-4 lg:p-5">
+            <p className="text-2xl font-bold text-[#181818] mb-1">{m.value}</p>
+            <p className="text-xs text-[#91908C]">{m.label}</p>
+            <p className={`text-xs mt-1 font-medium ${m.positive ? 'text-[#1F8A5B]' : 'text-red-600'}`}>{m.sub}</p>
           </div>
         ))}
       </div>
 
       {/* Graphique 6 mois */}
-      <div className="bg-[#171717] border border-white/[0.08] rounded-2xl p-5">
-        <h3 className="text-sm font-semibold text-white mb-4">Occupation sur 6 mois</h3>
+      <div className="bg-white border border-[#181818]/[0.08] rounded-2xl p-5">
+        <h3 className="text-sm font-semibold text-[#181818] mb-4">Occupation sur 6 mois</h3>
         <OccupationChart data={chartData} />
       </div>
 
       {/* Retards de paiement */}
-      <div className="bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-white/[0.07]">
-          <h3 className="text-sm font-semibold text-white">
+      <div className="bg-white border border-[#181818]/[0.08] rounded-2xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#181818]/[0.08]">
+          <h3 className="text-sm font-semibold text-[#181818]">
             Retards de paiement
             {(latePayments?.length ?? 0) > 0 && (
-              <span className="ml-2 text-xs font-bold px-1.5 py-0.5 rounded-full bg-red-500/15 text-red-400">
+              <span className="ml-2 text-xs font-bold px-1.5 py-0.5 rounded-full bg-red-500/15 text-red-600">
                 {latePayments!.length}
               </span>
             )}
           </h3>
         </div>
         {!latePayments?.length ? (
-          <p className="px-5 py-8 text-sm text-[#555] text-center">Aucun retard de paiement</p>
+          <p className="px-5 py-8 text-sm text-[#A09E96] text-center">Aucun retard de paiement</p>
         ) : (
-          <div className="divide-y divide-white/[0.05]">
+          <div className="divide-y divide-[#181818]/[0.06]">
             {(latePayments as LatePaymentRow[]).map((p) => {
               const daysLate = Math.floor((now.getTime() - new Date(p.due_date).getTime()) / 86_400_000)
               const phone = p.lease?.tenant?.whatsapp ?? ''
@@ -121,14 +121,14 @@ export default async function OccupationPage() {
                 `Bonjour ${p.lease?.tenant?.full_name ?? ''}, votre loyer de ${formatFCFA(p.amount_fcfa)} pour ${p.lease?.property?.title ?? 'votre bien'} est en retard de ${daysLate} jour(s). Merci de régulariser.`
               )
               return (
-                <div key={p.id} className="flex items-center gap-4 px-5 py-4 hover:bg-white/[0.02] transition">
+                <div key={p.id} className="flex items-center gap-4 px-5 py-4 hover:bg-[#181818]/[0.02] transition">
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{p.lease?.tenant?.full_name ?? '—'}</p>
-                    <p className="text-xs text-[#666] truncate">{p.lease?.property?.title ?? '—'}</p>
+                    <p className="text-sm font-medium text-[#181818] truncate">{p.lease?.tenant?.full_name ?? '—'}</p>
+                    <p className="text-xs text-[#91908C] truncate">{p.lease?.property?.title ?? '—'}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-red-400">{formatFCFA(p.amount_fcfa)}</p>
-                    <p className="text-xs text-[#555]">{daysLate}j de retard</p>
+                    <p className="text-sm font-semibold text-red-600">{formatFCFA(p.amount_fcfa)}</p>
+                    <p className="text-xs text-[#A09E96]">{daysLate}j de retard</p>
                   </div>
                   {phone && (
                     <a
@@ -148,43 +148,43 @@ export default async function OccupationPage() {
       </div>
 
       {/* Statut des biens en location */}
-      <div className="bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-white/[0.07]">
-          <h3 className="text-sm font-semibold text-white">Biens en location</h3>
+      <div className="bg-white border border-[#181818]/[0.08] rounded-2xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#181818]/[0.08]">
+          <h3 className="text-sm font-semibold text-[#181818]">Biens en location</h3>
         </div>
-        <div className="divide-y divide-white/[0.05]">
+        <div className="divide-y divide-[#181818]/[0.06]">
           {(rentalProperties as Property[] ?? []).map((prop) => {
             const lease = (activeLeases ?? []).find((l) => l.property_id === prop.id)
             const endDate = lease ? new Date(lease.end_date) : null
             const daysToEnd = endDate ? Math.floor((endDate.getTime() - now.getTime()) / 86_400_000) : null
             const expiringSoon = daysToEnd !== null && daysToEnd <= 30 && daysToEnd >= 0
             return (
-              <div key={prop.id} className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/[0.02] transition">
+              <div key={prop.id} className="flex items-center gap-4 px-5 py-3.5 hover:bg-[#181818]/[0.02] transition">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">{prop.title}</p>
-                  <p className="text-xs text-[#666] truncate">
+                  <p className="text-sm font-medium text-[#181818] truncate">{prop.title}</p>
+                  <p className="text-xs text-[#91908C] truncate">
                     {prop.neighborhood ? `${prop.neighborhood}, ` : ''}{prop.city}
                   </p>
                 </div>
                 <div className="text-right shrink-0">
                   {prop.status === 'loue' && lease ? (
                     <>
-                      <p className="text-xs font-medium text-white truncate max-w-[120px]">
+                      <p className="text-xs font-medium text-[#181818] truncate max-w-[120px]">
                         {(lease as Lease & { tenant?: { full_name: string } | null }).tenant?.full_name ?? '—'}
                       </p>
-                      <p className={`text-xs ${expiringSoon ? 'text-orange-400' : 'text-[#555]'}`}>
+                      <p className={`text-xs ${expiringSoon ? 'text-orange-600' : 'text-[#A09E96]'}`}>
                         {expiringSoon ? `Expire dans ${daysToEnd}j` : endDate ? `Fin ${endDate.toLocaleDateString('fr-FR')}` : '—'}
                       </p>
                     </>
                   ) : (
-                    <span className="text-xs text-[#3ECF8E]">Disponible</span>
+                    <span className="text-xs text-[#1F8A5B]">Disponible</span>
                   )}
                 </div>
               </div>
             )
           })}
           {!rentalProperties?.length && (
-            <p className="px-5 py-8 text-sm text-[#555] text-center">Aucun bien en location</p>
+            <p className="px-5 py-8 text-sm text-[#A09E96] text-center">Aucun bien en location</p>
           )}
         </div>
       </div>

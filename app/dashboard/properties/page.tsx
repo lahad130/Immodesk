@@ -9,10 +9,10 @@ function formatFCFA(n: number) {
 }
 
 const statusConfig = {
-  disponible: { label: 'Disponible', className: 'text-[#3ECF8E] bg-[#3ECF8E]/10' },
-  reserve:    { label: 'Réservé',    className: 'text-orange-400 bg-orange-500/10' },
-  vendu:      { label: 'Vendu',      className: 'text-blue-400 bg-blue-500/10' },
-  loue:       { label: 'Loué',       className: 'text-purple-400 bg-purple-500/10' },
+  disponible: { label: 'Disponible', className: 'text-[#1F8A5B] bg-[#1F8A5B]/10' },
+  reserve:    { label: 'Réservé',    className: 'text-orange-600 bg-orange-500/10' },
+  vendu:      { label: 'Vendu',      className: 'text-blue-600 bg-blue-500/10' },
+  loue:       { label: 'Loué',       className: 'text-purple-600 bg-purple-500/10' },
 }
 
 const typeIcons: Record<string, string> = {
@@ -41,10 +41,10 @@ export default async function PropertiesPage() {
     <div className="space-y-5 max-w-7xl">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-white">Biens immobiliers</h2>
-          <p className="text-sm text-[#888]">{stats.total} biens · {stats.disponible} disponibles</p>
+          <h2 className="text-lg font-semibold text-[#181818]">Biens immobiliers</h2>
+          <p className="text-sm text-[#62605B]">{stats.total} biens · {stats.disponible} disponibles</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 text-black text-sm font-semibold rounded-xl transition">
+        <button className="flex items-center gap-2 px-4 py-2 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 text-white text-sm font-semibold rounded-xl transition">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
           </svg>
@@ -55,14 +55,14 @@ export default async function PropertiesPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Total', value: stats.total, color: 'text-white' },
-          { label: 'Disponibles', value: stats.disponible, color: 'text-[#3ECF8E]' },
-          { label: 'Réservés', value: stats.reserve, color: 'text-orange-400' },
-          { label: 'Vendus/Loués', value: stats.vendu, color: 'text-blue-400' },
+          { label: 'Total', value: stats.total, color: 'text-[#181818]' },
+          { label: 'Disponibles', value: stats.disponible, color: 'text-[#1F8A5B]' },
+          { label: 'Réservés', value: stats.reserve, color: 'text-orange-600' },
+          { label: 'Vendus/Loués', value: stats.vendu, color: 'text-blue-600' },
         ].map((s) => (
-          <div key={s.label} className="bg-[#171717] border border-white/[0.08] rounded-xl p-4">
+          <div key={s.label} className="bg-white border border-[#181818]/[0.08] rounded-xl p-4">
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-[#666] mt-0.5">{s.label}</p>
+            <p className="text-xs text-[#91908C] mt-0.5">{s.label}</p>
           </div>
         ))}
       </div>
@@ -74,7 +74,7 @@ export default async function PropertiesPage() {
           return (
             <div
               key={p.id}
-              className="bg-[#171717] border border-white/[0.08] hover:border-white/[0.15] rounded-2xl overflow-hidden transition group cursor-pointer"
+              className="bg-white border border-[#181818]/[0.08] hover:border-[#181818]/[0.15] rounded-2xl overflow-hidden transition group cursor-pointer"
             >
               {/* Image placeholder */}
               <div className="h-36 bg-gradient-to-br from-[#1a1a1a] to-[#222] flex items-center justify-center text-4xl relative">
@@ -85,24 +85,24 @@ export default async function PropertiesPage() {
                   </span>
                 </div>
                 <div className="absolute top-3 left-3">
-                  <span className="text-xs font-medium px-2 py-1 rounded-full bg-black/50 text-[#aaa] capitalize">
+                  <span className="text-xs font-medium px-2 py-1 rounded-full bg-black/50 text-white/90 capitalize">
                     {p.transaction_type}
                   </span>
                 </div>
               </div>
 
               <div className="p-4">
-                <p className="text-sm font-semibold text-white leading-snug mb-1 line-clamp-1">{p.title}</p>
-                <p className="text-xs text-[#666] mb-3">
+                <p className="text-sm font-semibold text-[#181818] leading-snug mb-1 line-clamp-1">{p.title}</p>
+                <p className="text-xs text-[#91908C] mb-3">
                   {p.neighborhood ? `${p.neighborhood}, ` : ''}{p.city}
                 </p>
 
-                <p className="text-base font-bold text-[#3ECF8E] mb-3">
+                <p className="text-base font-bold text-[#1F8A5B] mb-3">
                   {formatFCFA(p.price)}
-                  {p.transaction_type === 'location' && <span className="text-xs font-normal text-[#666]">/mois</span>}
+                  {p.transaction_type === 'location' && <span className="text-xs font-normal text-[#91908C]">/mois</span>}
                 </p>
 
-                <div className="flex items-center gap-3 text-xs text-[#666]">
+                <div className="flex items-center gap-3 text-xs text-[#91908C]">
                   {p.area_sqm && (
                     <span className="flex items-center gap-1">
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,7 +119,7 @@ export default async function PropertiesPage() {
                       {p.bedrooms} ch.
                     </span>
                   )}
-                  <span className="capitalize text-[#444]">{p.property_type}</span>
+                  <span className="capitalize text-[#B5B3AB]">{p.property_type}</span>
                 </div>
               </div>
             </div>

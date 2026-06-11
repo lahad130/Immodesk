@@ -59,8 +59,8 @@ export default async function DocumentsPage({
     <div className="space-y-5 max-w-4xl">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-white">Documents</h2>
-          <p className="text-sm text-[#888]">
+          <h2 className="text-lg font-semibold text-[#181818]">Documents</h2>
+          <p className="text-sm text-[#62605B]">
             {(docs ?? []).length} document{(docs ?? []).length !== 1 ? 's' : ''}
           </p>
         </div>
@@ -77,8 +77,8 @@ export default async function DocumentsPage({
             href={`/dashboard/documents?filtre=${opt.value}`}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border ${
               filtre === opt.value
-                ? 'bg-[#3ECF8E]/10 text-[#3ECF8E] border-[#3ECF8E]/30'
-                : 'text-[#888] hover:text-white border-white/[0.08] hover:border-white/20'
+                ? 'bg-[#1F8A5B]/10 text-[#1F8A5B] border-[#1F8A5B]/30'
+                : 'text-[#62605B] hover:text-[#181818] border-[#181818]/[0.08] hover:border-[#181818]/20'
             }`}
           >
             {opt.label}
@@ -86,15 +86,15 @@ export default async function DocumentsPage({
         ))}
       </div>
 
-      <div className="bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
-        <div className="divide-y divide-white/[0.05]">
+      <div className="bg-white border border-[#181818]/[0.08] rounded-2xl overflow-hidden">
+        <div className="divide-y divide-[#181818]/[0.06]">
           {(docs ?? []).length === 0 ? (
             <div className="px-5 py-12 text-center">
-              <p className="text-sm text-[#555]">
+              <p className="text-sm text-[#A09E96]">
                 {filtre !== 'tous' ? 'Aucun document pour cette catégorie' : 'Aucun document importé'}
               </p>
               {filtre === 'tous' && (
-                <p className="text-xs text-[#444] mt-1">
+                <p className="text-xs text-[#B5B3AB] mt-1">
                   Cliquez sur &quot;Importer&quot; pour ajouter un document
                 </p>
               )}
@@ -109,7 +109,7 @@ export default async function DocumentsPage({
               return (
                 <div
                   key={doc.id}
-                  className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/[0.02] transition group"
+                  className="flex items-center gap-4 px-5 py-3.5 hover:bg-[#181818]/[0.02] transition group"
                 >
                   <div
                     className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
@@ -119,7 +119,7 @@ export default async function DocumentsPage({
                     }`}
                   >
                     <svg
-                      className={`w-4 h-4 ${isPdf ? 'text-red-400' : 'text-blue-400'}`}
+                      className={`w-4 h-4 ${isPdf ? 'text-red-600' : 'text-blue-600'}`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -134,9 +134,9 @@ export default async function DocumentsPage({
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{doc.name}</p>
-                    <p className="text-xs text-[#666] mt-0.5">
-                      <span className="text-[#555] mr-2">
+                    <p className="text-sm font-medium text-[#181818] truncate">{doc.name}</p>
+                    <p className="text-xs text-[#91908C] mt-0.5">
+                      <span className="text-[#A09E96] mr-2">
                         {CATEGORY_LABELS[doc.category as DocumentCategory] ?? doc.category}
                       </span>
                       {formatSize(doc.size_bytes)} · {formatDate(doc.created_at)}
@@ -149,7 +149,7 @@ export default async function DocumentsPage({
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Voir le document"
-                      className="p-1.5 text-[#555] hover:text-white hover:bg-white/10 rounded-lg transition"
+                      className="p-1.5 text-[#A09E96] hover:text-[#181818] hover:bg-[#181818]/10 rounded-lg transition"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -160,7 +160,7 @@ export default async function DocumentsPage({
                       href={publicUrl}
                       download={doc.name}
                       aria-label="Télécharger"
-                      className="p-1.5 text-[#555] hover:text-white hover:bg-white/10 rounded-lg transition"
+                      className="p-1.5 text-[#A09E96] hover:text-[#181818] hover:bg-[#181818]/10 rounded-lg transition"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

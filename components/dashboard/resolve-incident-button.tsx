@@ -29,8 +29,8 @@ export default function ResolveIncidentButton({
       aria-busy={pending}
       className={`text-xs border px-2.5 py-1 rounded-lg transition disabled:opacity-50 ${
         failed
-          ? 'text-red-400 border-red-500/20'
-          : 'text-[#555] hover:text-white border-white/[0.08] hover:border-white/20'
+          ? 'text-red-600 border-red-500/20'
+          : 'text-[#A09E96] hover:text-[#181818] border-[#181818]/[0.08] hover:border-[#181818]/20'
       }`}
     >
       {pending ? '...' : failed ? 'Erreur' : 'Résolu'}

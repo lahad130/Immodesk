@@ -110,18 +110,18 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`hidden lg:flex flex-col bg-[#111] border-r border-white/[0.07] transition-all duration-200 ${
+      className={`hidden lg:flex flex-col bg-[#FAF9F5] border-r border-[#181818]/[0.08] transition-all duration-200 ${
         collapsed ? 'w-16' : 'w-56'
       }`}
     >
       {/* Logo */}
-      <div className={`flex items-center h-14 border-b border-white/[0.07] px-4 ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
-        <div className="w-7 h-7 rounded-lg bg-[#3ECF8E] flex items-center justify-center shrink-0">
-          <svg className="w-4 h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <div className={`flex items-center h-14 border-b border-[#181818]/[0.08] px-4 ${collapsed ? 'justify-center' : 'gap-2.5'}`}>
+        <div className="w-7 h-7 rounded-lg bg-[#1F8A5B] flex items-center justify-center shrink-0">
+          <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V10.5z" />
           </svg>
         </div>
-        {!collapsed && <span className="text-sm font-bold text-white">Immo<span className="text-[#3ECF8E]">Desk</span></span>}
+        {!collapsed && <span className="text-sm font-bold text-[#181818]">Immo<span className="text-[#1F8A5B]">Desk</span></span>}
       </div>
 
       {/* Nav */}
@@ -134,7 +134,7 @@ export default function Sidebar() {
             <div key={item.href}>
               {showSection && (
                 <div className="px-2.5 pt-3 pb-1">
-                  <p className="text-[10px] font-semibold text-[#444] uppercase tracking-wider">
+                  <p className="text-[10px] font-semibold text-[#B5B3AB] uppercase tracking-wider">
                     {(item as { section: string }).section}
                   </p>
                 </div>
@@ -144,8 +144,8 @@ export default function Sidebar() {
                 title={collapsed ? item.label : undefined}
                 className={`flex items-center gap-3 px-2.5 py-2 rounded-lg text-sm transition group ${
                   active
-                    ? 'bg-[#3ECF8E]/10 text-[#3ECF8E]'
-                    : 'text-[#888] hover:text-white hover:bg-white/5'
+                    ? 'bg-[#1F8A5B]/10 text-[#1F8A5B]'
+                    : 'text-[#62605B] hover:text-[#181818] hover:bg-[#181818]/5'
                 } ${collapsed ? 'justify-center' : ''}`}
               >
                 <span className="shrink-0">{item.icon}</span>
@@ -153,7 +153,7 @@ export default function Sidebar() {
                   <span className="flex-1 font-medium">{item.label}</span>
                 )}
                 {!collapsed && 'badge' in item && item.badge && (
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#3ECF8E]/15 text-[#3ECF8E]">
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#1F8A5B]/15 text-[#1F8A5B]">
                     {item.badge}
                   </span>
                 )}
@@ -164,12 +164,12 @@ export default function Sidebar() {
       </nav>
 
       {/* Collapse toggle + user */}
-      <div className="border-t border-white/[0.07] p-2 space-y-1">
+      <div className="border-t border-[#181818]/[0.08] p-2 space-y-1">
         <button
           onClick={() => setCollapsed(!collapsed)}
           aria-label={collapsed ? 'Développer la navigation' : 'Réduire la navigation'}
           aria-expanded={!collapsed}
-          className={`flex items-center gap-3 w-full px-2.5 py-2 rounded-lg text-[#555] hover:text-white hover:bg-white/5 text-sm transition ${collapsed ? 'justify-center' : ''}`}
+          className={`flex items-center gap-3 w-full px-2.5 py-2 rounded-lg text-[#A09E96] hover:text-[#181818] hover:bg-[#181818]/5 text-sm transition ${collapsed ? 'justify-center' : ''}`}
         >
           <svg
             className={`w-4 h-4 shrink-0 transition-transform ${collapsed ? 'rotate-180' : ''}`}
@@ -182,7 +182,7 @@ export default function Sidebar() {
 
         <Link
           href="/logout"
-          className={`flex items-center gap-3 px-2.5 py-2 rounded-lg text-[#555] hover:text-white hover:bg-white/5 text-sm transition ${collapsed ? 'justify-center' : ''}`}
+          className={`flex items-center gap-3 px-2.5 py-2 rounded-lg text-[#A09E96] hover:text-[#181818] hover:bg-[#181818]/5 text-sm transition ${collapsed ? 'justify-center' : ''}`}
           title={collapsed ? 'Déconnexion' : undefined}
         >
           <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

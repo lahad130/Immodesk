@@ -25,7 +25,7 @@ export default async function NouvelleInspectionPage() {
       {/* Back link */}
       <Link
         href="/dashboard/inspections"
-        className="text-[#666] hover:text-white text-sm flex items-center gap-1.5 w-fit"
+        className="text-[#91908C] hover:text-[#181818] text-sm flex items-center gap-1.5 w-fit"
       >
         <svg
           viewBox="0 0 24 24"
@@ -43,8 +43,8 @@ export default async function NouvelleInspectionPage() {
       </Link>
 
       <div>
-        <h2 className="text-lg font-semibold text-white">Nouvel état des lieux</h2>
-        <p className="text-sm text-[#888] mt-0.5">Remplissez le formulaire ci-dessous</p>
+        <h2 className="text-lg font-semibold text-[#181818]">Nouvel état des lieux</h2>
+        <p className="text-sm text-[#62605B] mt-0.5">Remplissez le formulaire ci-dessous</p>
       </div>
 
       <InspectionForm

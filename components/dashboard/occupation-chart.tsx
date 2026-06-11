@@ -16,9 +16,9 @@ interface CustomTooltipProps {
 function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-[#1a1a1a] border border-white/[0.08] rounded-xl px-3 py-2 text-xs">
-      <p className="text-[#888] mb-0.5">{label}</p>
-      <p className="text-[#3ECF8E] font-semibold">{payload[0].value}% occupé</p>
+    <div className="bg-white shadow-lg border border-[#181818]/[0.08] rounded-xl px-3 py-2 text-xs">
+      <p className="text-[#62605B] mb-0.5">{label}</p>
+      <p className="text-[#1F8A5B] font-semibold">{payload[0].value}% occupé</p>
     </div>
   )
 }
@@ -29,21 +29,21 @@ export default function OccupationChart({ data }: { data: ChartPoint[] }) {
       <BarChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: -16 }}>
         <XAxis
           dataKey="month"
-          stroke="#444"
-          tick={{ fill: '#666', fontSize: 11 }}
+          stroke="#D9D7CC"
+          tick={{ fill: '#91908C', fontSize: 11 }}
           axisLine={false}
           tickLine={false}
         />
         <YAxis
-          stroke="#444"
-          tick={{ fill: '#666', fontSize: 11 }}
+          stroke="#D9D7CC"
+          tick={{ fill: '#91908C', fontSize: 11 }}
           axisLine={false}
           tickLine={false}
           tickFormatter={(v) => `${v}%`}
           domain={[0, 100]}
         />
-        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
-        <Bar dataKey="rate" fill="#3ECF8E" radius={[4, 4, 0, 0]} maxBarSize={40} />
+        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(24,24,24,0.04)' }} />
+        <Bar dataKey="rate" fill="#1F8A5B" radius={[4, 4, 0, 0]} maxBarSize={40} />
       </BarChart>
     </ResponsiveContainer>
   )

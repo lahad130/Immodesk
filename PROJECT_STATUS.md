@@ -123,10 +123,10 @@ proxy.ts                      # Middleware Next.js 16 (protection /dashboard)
 - **CTA** : boutons noirs `#181818` arrondis (`rounded-full`)
 - **Titres** : serif (Source Serif 4, `font-serif`) · Corps : Geist Sans
 
-### Dashboard (produit) — thème sombre conservé
-- **Background** : `#0f0f0f` · **Surface / Cards** : `#171717`
-- **Brand** : `#3ECF8E` · **Texte secondaire** : `#888`
-- **Bordures** : `rgba(255,255,255,0.08)`
+### Dashboard (produit) — thème clair assorti
+- **Background** : `#F5F4EE` · **Sidebar** : `#FAF9F5` · **Cards** : blanc
+- **Accent / succès** : vert profond `#1F8A5B` (nav active, boutons, statut payé)
+- **Bordures** : `rgba(24,24,24,0.08)` · Statuts : rouge/orange/bleu en nuance 600
 
 - **Langue** : Français · Prix en FCFA
 

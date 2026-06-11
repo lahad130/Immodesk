@@ -83,14 +83,14 @@ function MarkdownText({ text }: { text: string }) {
     <div className="space-y-1">
       {lines.map((line, i) => {
         if (line.startsWith('**') && line.endsWith('**')) {
-          return <p key={i} className="font-semibold text-white">{line.slice(2, -2)}</p>
+          return <p key={i} className="font-semibold text-[#181818]">{line.slice(2, -2)}</p>
         }
         if (line.startsWith('• ') || line.startsWith('- ')) {
           const content = line.slice(2).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-          return <p key={i} className="flex gap-2"><span className="text-[#3ECF8E] shrink-0">•</span><span dangerouslySetInnerHTML={{ __html: content }} /></p>
+          return <p key={i} className="flex gap-2"><span className="text-[#1F8A5B] shrink-0">•</span><span dangerouslySetInnerHTML={{ __html: content }} /></p>
         }
         if (line === '---') {
-          return <hr key={i} className="border-white/10 my-2" />
+          return <hr key={i} className="border-[#181818]/10 my-2" />
         }
         if (line === '') return <div key={i} className="h-1" />
         const html = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>')
@@ -130,14 +130,14 @@ export default function AIAgentPage() {
     <div className="flex flex-col h-[calc(100vh-3.5rem-3rem)] max-w-3xl mx-auto">
       {/* Header */}
       <div className="flex items-center gap-3 mb-4 shrink-0">
-        <div className="w-9 h-9 rounded-xl bg-[#3ECF8E]/15 border border-[#3ECF8E]/30 flex items-center justify-center text-[#3ECF8E]">
+        <div className="w-9 h-9 rounded-xl bg-[#1F8A5B]/15 border border-[#1F8A5B]/30 flex items-center justify-center text-[#1F8A5B]">
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1" />
           </svg>
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-white">Agent IA ImmoDesk</h2>
-          <p className="text-xs text-[#3ECF8E]">● En ligne</p>
+          <h2 className="text-sm font-semibold text-[#181818]">Agent IA ImmoDesk</h2>
+          <p className="text-xs text-[#1F8A5B]">● En ligne</p>
         </div>
       </div>
 
@@ -146,7 +146,7 @@ export default function AIAgentPage() {
         {messages.map((m, i) => (
           <div key={i} className={`flex gap-3 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
             {m.role === 'assistant' && (
-              <div className="w-7 h-7 rounded-lg bg-[#3ECF8E]/10 border border-[#3ECF8E]/20 flex items-center justify-center text-[#3ECF8E] shrink-0 mt-1">
+              <div className="w-7 h-7 rounded-lg bg-[#1F8A5B]/10 border border-[#1F8A5B]/20 flex items-center justify-center text-[#1F8A5B] shrink-0 mt-1">
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1" />
                 </svg>
@@ -155,8 +155,8 @@ export default function AIAgentPage() {
             <div
               className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 m.role === 'user'
-                  ? 'bg-[#3ECF8E]/10 border border-[#3ECF8E]/20 text-white rounded-tr-sm'
-                  : 'bg-[#171717] border border-white/[0.08] text-[#ccc] rounded-tl-sm'
+                  ? 'bg-[#1F8A5B]/10 border border-[#1F8A5B]/20 text-[#181818] rounded-tr-sm'
+                  : 'bg-white border border-[#181818]/[0.08] text-[#3D3D3A] rounded-tl-sm'
               }`}
             >
               {m.role === 'assistant' ? <MarkdownText text={m.content} /> : m.content}
@@ -165,16 +165,16 @@ export default function AIAgentPage() {
         ))}
         {loading && (
           <div className="flex gap-3">
-            <div className="w-7 h-7 rounded-lg bg-[#3ECF8E]/10 border border-[#3ECF8E]/20 flex items-center justify-center text-[#3ECF8E] shrink-0">
+            <div className="w-7 h-7 rounded-lg bg-[#1F8A5B]/10 border border-[#1F8A5B]/20 flex items-center justify-center text-[#1F8A5B] shrink-0">
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1" />
               </svg>
             </div>
-            <div className="bg-[#171717] border border-white/[0.08] px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5">
+            <div className="bg-white border border-[#181818]/[0.08] px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5">
               {[0, 1, 2].map((i) => (
                 <span
                   key={i}
-                  className="w-1.5 h-1.5 rounded-full bg-[#3ECF8E]/50 animate-bounce"
+                  className="w-1.5 h-1.5 rounded-full bg-[#1F8A5B]/50 animate-bounce"
                   style={{ animationDelay: `${i * 150}ms` }}
                 />
               ))}
@@ -191,7 +191,7 @@ export default function AIAgentPage() {
             <button
               key={s}
               onClick={() => send(s)}
-              className="text-xs px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[#aaa] hover:text-white transition"
+              className="text-xs px-3 py-1.5 rounded-lg bg-[#181818]/5 hover:bg-[#181818]/10 border border-[#181818]/10 text-[#55534D] hover:text-[#181818] transition"
             >
               {s}
             </button>
@@ -203,18 +203,18 @@ export default function AIAgentPage() {
       <div className="shrink-0">
         <form
           onSubmit={(e) => { e.preventDefault(); send(input) }}
-          className="flex gap-2 bg-[#171717] border border-white/[0.08] rounded-2xl p-2"
+          className="flex gap-2 bg-white border border-[#181818]/[0.08] rounded-2xl p-2"
         >
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Posez une question à votre assistant IA..."
-            className="flex-1 bg-transparent text-sm text-white placeholder-[#555] px-2 outline-none"
+            className="flex-1 bg-transparent text-sm text-[#181818] placeholder-[#A8A69E] px-2 outline-none"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="p-2.5 bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 disabled:opacity-40 disabled:cursor-not-allowed text-black rounded-xl transition"
+            className="p-2.5 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl transition"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

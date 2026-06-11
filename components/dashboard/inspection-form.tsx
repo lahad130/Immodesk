@@ -42,8 +42,8 @@ async function uploadPhoto(file: File): Promise<string> {
 }
 
 const inputClass =
-  'bg-[#111] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white w-full focus:outline-none focus:border-[#3ECF8E]/50'
-const labelClass = 'block text-sm text-[#888] mb-1.5'
+  'bg-[#FAF9F5] border border-[#181818]/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#181818] w-full focus:outline-none focus:border-[#1F8A5B]/50'
+const labelClass = 'block text-sm text-[#62605B] mb-1.5'
 
 export default function InspectionForm({ properties, leases }: InspectionFormProps) {
   const [pending, startTransition] = useTransition()
@@ -130,11 +130,11 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="bg-[#171717] border border-white/[0.08] rounded-2xl p-6 space-y-5">
+      <div className="bg-white border border-[#181818]/[0.08] rounded-2xl p-6 space-y-5">
         {/* Bien */}
         <div>
           <label htmlFor="property_id" className={labelClass}>
-            Bien <span className="text-[#3ECF8E]">*</span>
+            Bien <span className="text-[#1F8A5B]">*</span>
           </label>
           <select
             id="property_id"
@@ -175,7 +175,7 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
         {/* Type */}
         <div>
           <p className={labelClass}>
-            Type <span className="text-[#3ECF8E]">*</span>
+            Type <span className="text-[#1F8A5B]">*</span>
           </p>
           <div className="flex gap-2">
             {(
@@ -190,8 +190,8 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
                 onClick={() => setType(value)}
                 className={`px-5 py-2 rounded-xl text-sm font-medium transition ${
                   type === value
-                    ? 'bg-[#3ECF8E]/10 text-[#3ECF8E] border border-[#3ECF8E]/30'
-                    : 'text-[#666] hover:text-white border border-white/[0.08]'
+                    ? 'bg-[#1F8A5B]/10 text-[#1F8A5B] border border-[#1F8A5B]/30'
+                    : 'text-[#91908C] hover:text-[#181818] border border-[#181818]/[0.08]'
                 }`}
               >
                 {label}
@@ -203,7 +203,7 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
         {/* Date */}
         <div>
           <label htmlFor="inspection_date" className={labelClass}>
-            Date <span className="text-[#3ECF8E]">*</span>
+            Date <span className="text-[#1F8A5B]">*</span>
           </label>
           <input
             id="inspection_date"
@@ -240,7 +240,7 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
             }`}
           >
             <svg
-              className="w-4 h-4 text-[#888]"
+              className="w-4 h-4 text-[#62605B]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -253,7 +253,7 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <span className="text-[#888] text-sm">
+            <span className="text-[#62605B] text-sm">
               {uploading ? 'Téléchargement...' : 'Ajouter des photos'}
             </span>
             <input
@@ -268,7 +268,7 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
           </label>
 
           {uploadError && (
-            <p className="text-red-400 text-xs mt-1.5">{uploadError}</p>
+            <p className="text-red-600 text-xs mt-1.5">{uploadError}</p>
           )}
 
           {photoUrls.length > 0 && (
@@ -276,7 +276,7 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
               {photoUrls.map((url, i) => (
                 <div
                   key={i}
-                  className="relative group aspect-square rounded-lg overflow-hidden bg-[#111]"
+                  className="relative group aspect-square rounded-lg overflow-hidden bg-[#FAF9F5]"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={url} alt="" className="w-full h-full object-cover" />
@@ -307,20 +307,20 @@ export default function InspectionForm({ properties, leases }: InspectionFormPro
         </div>
 
         {/* Global error */}
-        {error && <p className="text-red-400 text-sm">{error}</p>}
+        {error && <p className="text-red-600 text-sm">{error}</p>}
 
         {/* Actions */}
         <div className="flex items-center justify-end gap-3 pt-2">
           <Link
             href="/dashboard/inspections"
-            className="text-[#666] hover:text-white text-sm transition"
+            className="text-[#91908C] hover:text-[#181818] text-sm transition"
           >
             Annuler
           </Link>
           <button
             type="submit"
             disabled={pending || uploading}
-            className="px-5 py-2.5 bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 disabled:opacity-50 text-black text-sm font-semibold rounded-xl transition"
+            className="px-5 py-2.5 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition"
           >
             {pending ? 'Enregistrement...' : "Créer l'état des lieux"}
           </button>

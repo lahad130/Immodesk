@@ -41,7 +41,7 @@ export default function NouveauBailModal({
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 w-full px-4 py-2.5 bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 text-black text-sm font-semibold rounded-xl transition"
+        className="flex items-center gap-2 w-full px-4 py-2.5 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 text-white text-sm font-semibold rounded-xl transition"
       >
         <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -57,16 +57,16 @@ export default function NouveauBailModal({
           aria-labelledby="bail-modal-title"
           onKeyDown={(e) => { if (e.key === 'Escape') setOpen(false) }}
         >
-          <div className="bg-[#161616] border border-white/[0.09] rounded-2xl w-full max-w-md shadow-2xl">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07]">
+          <div className="bg-[#F0EEE6] border border-[#181818]/[0.10] rounded-2xl w-full max-w-md shadow-2xl">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#181818]/[0.08]">
               <div>
-                <h3 id="bail-modal-title" className="text-sm font-semibold text-white">Nouveau bail</h3>
-                <p className="text-xs text-[#555] mt-0.5">{tenantName}</p>
+                <h3 id="bail-modal-title" className="text-sm font-semibold text-[#181818]">Nouveau bail</h3>
+                <p className="text-xs text-[#A09E96] mt-0.5">{tenantName}</p>
               </div>
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Fermer"
-                className="text-[#555] hover:text-white transition"
+                className="text-[#A09E96] hover:text-[#181818] transition"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -78,11 +78,11 @@ export default function NouveauBailModal({
               <input type="hidden" name="tenant_id" value={tenantId} />
 
               <div>
-                <label htmlFor="bail-property" className="block text-xs text-[#666] mb-1.5">Bien (optionnel)</label>
+                <label htmlFor="bail-property" className="block text-xs text-[#91908C] mb-1.5">Bien (optionnel)</label>
                 <select
                   id="bail-property"
                   name="property_id"
-                  className="w-full bg-[#1f1f1f] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#3ECF8E]/50"
+                  className="w-full bg-[#F0EEE6] border border-[#181818]/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#181818] focus:outline-none focus:border-[#1F8A5B]/50"
                 >
                   <option value="">Aucun bien assigné</option>
                   {properties.map((p) => (
@@ -92,13 +92,13 @@ export default function NouveauBailModal({
                   ))}
                 </select>
                 {properties.length === 0 && (
-                  <p className="text-xs text-[#555] mt-1">Aucun bien disponible</p>
+                  <p className="text-xs text-[#A09E96] mt-1">Aucun bien disponible</p>
                 )}
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label htmlFor="bail-start" className="block text-xs text-[#666] mb-1.5">Début du bail</label>
+                  <label htmlFor="bail-start" className="block text-xs text-[#91908C] mb-1.5">Début du bail</label>
                   <input
                     id="bail-start"
                     name="start_date"
@@ -106,11 +106,11 @@ export default function NouveauBailModal({
                     defaultValue={today}
                     required
                     aria-required="true"
-                    className="w-full bg-[#1f1f1f] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#3ECF8E]/50"
+                    className="w-full bg-[#F0EEE6] border border-[#181818]/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#181818] focus:outline-none focus:border-[#1F8A5B]/50"
                   />
                 </div>
                 <div>
-                  <label htmlFor="bail-end" className="block text-xs text-[#666] mb-1.5">Fin du bail</label>
+                  <label htmlFor="bail-end" className="block text-xs text-[#91908C] mb-1.5">Fin du bail</label>
                   <input
                     id="bail-end"
                     name="end_date"
@@ -118,13 +118,13 @@ export default function NouveauBailModal({
                     defaultValue={oneYearLater}
                     required
                     aria-required="true"
-                    className="w-full bg-[#1f1f1f] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#3ECF8E]/50"
+                    className="w-full bg-[#F0EEE6] border border-[#181818]/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#181818] focus:outline-none focus:border-[#1F8A5B]/50"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="bail-rent" className="block text-xs text-[#666] mb-1.5">Loyer mensuel (FCFA)</label>
+                <label htmlFor="bail-rent" className="block text-xs text-[#91908C] mb-1.5">Loyer mensuel (FCFA)</label>
                 <input
                   id="bail-rent"
                   name="monthly_rent"
@@ -133,24 +133,24 @@ export default function NouveauBailModal({
                   placeholder="150000"
                   required
                   aria-required="true"
-                  className="w-full bg-[#1f1f1f] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white placeholder-[#444] focus:outline-none focus:border-[#3ECF8E]/50"
+                  className="w-full bg-[#F0EEE6] border border-[#181818]/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#181818] placeholder-[#B5B3AB] focus:outline-none focus:border-[#1F8A5B]/50"
                 />
               </div>
 
               <div>
-                <label htmlFor="bail-deposit" className="block text-xs text-[#666] mb-1.5">Caution (FCFA)</label>
+                <label htmlFor="bail-deposit" className="block text-xs text-[#91908C] mb-1.5">Caution (FCFA)</label>
                 <input
                   id="bail-deposit"
                   name="deposit"
                   type="number"
                   min={0}
                   defaultValue={0}
-                  className="w-full bg-[#1f1f1f] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#3ECF8E]/50"
+                  className="w-full bg-[#F0EEE6] border border-[#181818]/[0.08] rounded-xl px-3 py-2.5 text-sm text-[#181818] focus:outline-none focus:border-[#1F8A5B]/50"
                 />
               </div>
 
               {error && (
-                <p role="alert" className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+                <p role="alert" className="text-xs text-red-600 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
                   {error}
                 </p>
               )}
@@ -159,7 +159,7 @@ export default function NouveauBailModal({
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="flex-1 px-4 py-2.5 text-sm text-[#666] hover:text-white border border-white/[0.08] rounded-xl transition"
+                  className="flex-1 px-4 py-2.5 text-sm text-[#91908C] hover:text-[#181818] border border-[#181818]/[0.08] rounded-xl transition"
                 >
                   Annuler
                 </button>
@@ -167,7 +167,7 @@ export default function NouveauBailModal({
                   type="submit"
                   disabled={isPending}
                   aria-busy={isPending}
-                  className="flex-1 px-4 py-2.5 bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 disabled:opacity-50 text-black text-sm font-semibold rounded-xl transition"
+                  className="flex-1 px-4 py-2.5 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition"
                 >
                   {isPending ? 'Création...' : 'Créer le bail'}
                 </button>

@@ -99,22 +99,22 @@ export default async function DashboardPage() {
     <div className="space-y-6 max-w-7xl">
       {/* Welcome */}
       <div>
-        <h2 className="text-lg font-semibold text-white">Bonjour 👋</h2>
-        <p className="text-sm text-[#888] mt-0.5">Voici l&apos;activité de votre agence aujourd&apos;hui.</p>
+        <h2 className="text-lg font-semibold text-[#181818]">Bonjour 👋</h2>
+        <p className="text-sm text-[#62605B] mt-0.5">Voici l&apos;activité de votre agence aujourd&apos;hui.</p>
       </div>
 
       {/* Metrics grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {metrics.map((m) => (
-          <div key={m.label} className="bg-[#171717] border border-white/[0.08] rounded-2xl p-4 lg:p-5">
+          <div key={m.label} className="bg-white border border-[#181818]/[0.08] rounded-2xl p-4 lg:p-5">
             <div className="flex items-start justify-between mb-3">
-              <div className="w-8 h-8 rounded-xl bg-[#3ECF8E]/10 flex items-center justify-center text-[#3ECF8E]">
+              <div className="w-8 h-8 rounded-xl bg-[#1F8A5B]/10 flex items-center justify-center text-[#1F8A5B]">
                 {m.icon}
               </div>
             </div>
-            <p className="text-2xl font-bold text-white mb-1">{m.value}</p>
-            <p className="text-xs text-[#666] leading-snug">{m.label}</p>
-            <p className={`text-xs mt-1 font-medium ${m.positive ? 'text-[#3ECF8E]' : 'text-red-400'}`}>
+            <p className="text-2xl font-bold text-[#181818] mb-1">{m.value}</p>
+            <p className="text-xs text-[#91908C] leading-snug">{m.label}</p>
+            <p className={`text-xs mt-1 font-medium ${m.positive ? 'text-[#1F8A5B]' : 'text-red-600'}`}>
               {m.sub}
             </p>
           </div>
@@ -124,28 +124,28 @@ export default async function DashboardPage() {
       {/* Two columns: leads + visits */}
       <div className="grid lg:grid-cols-5 gap-4">
         {/* Recent leads (3/5) */}
-        <div className="lg:col-span-3 bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07]">
-            <h3 className="text-sm font-semibold text-white">Derniers leads</h3>
-            <Link href="/dashboard/leads" className="text-xs text-[#3ECF8E] hover:text-[#3ECF8E]/80 transition">
+        <div className="lg:col-span-3 bg-white border border-[#181818]/[0.08] rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-[#181818]/[0.08]">
+            <h3 className="text-sm font-semibold text-[#181818]">Derniers leads</h3>
+            <Link href="/dashboard/leads" className="text-xs text-[#1F8A5B] hover:text-[#1F8A5B]/80 transition">
               Voir tout →
             </Link>
           </div>
-          <div className="divide-y divide-white/[0.05]">
+          <div className="divide-y divide-[#181818]/[0.06]">
             {(recentLeads as Lead[])?.map((lead) => (
-              <div key={lead.id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-white/[0.02] transition">
-                <div className="w-8 h-8 rounded-full bg-[#1f1f1f] border border-white/10 flex items-center justify-center text-xs font-semibold text-white shrink-0">
+              <div key={lead.id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-[#181818]/[0.02] transition">
+                <div className="w-8 h-8 rounded-full bg-[#F0EEE6] border border-[#181818]/10 flex items-center justify-center text-xs font-semibold text-[#181818] shrink-0">
                   {lead.full_name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">{lead.full_name}</p>
-                  <p className="text-xs text-[#666] truncate">
+                  <p className="text-sm font-medium text-[#181818] truncate">{lead.full_name}</p>
+                  <p className="text-xs text-[#91908C] truncate">
                     {lead.property_type ?? 'Non précisé'} · {lead.budget_max ? formatFCFA(lead.budget_max) : '—'}
                   </p>
                 </div>
                 <div className="flex flex-col items-end gap-1 shrink-0">
                   <LeadStatusBadge status={lead.status} />
-                  <span className="text-[10px] text-[#555]">{timeAgo(lead.created_at)}</span>
+                  <span className="text-[10px] text-[#A09E96]">{timeAgo(lead.created_at)}</span>
                 </div>
               </div>
             ))}
@@ -153,30 +153,30 @@ export default async function DashboardPage() {
         </div>
 
         {/* Upcoming visits (2/5) */}
-        <div className="lg:col-span-2 bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07]">
-            <h3 className="text-sm font-semibold text-white">Prochaines visites</h3>
-            <Link href="/dashboard/visits" className="text-xs text-[#3ECF8E] hover:text-[#3ECF8E]/80 transition">
+        <div className="lg:col-span-2 bg-white border border-[#181818]/[0.08] rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-[#181818]/[0.08]">
+            <h3 className="text-sm font-semibold text-[#181818]">Prochaines visites</h3>
+            <Link href="/dashboard/visits" className="text-xs text-[#1F8A5B] hover:text-[#1F8A5B]/80 transition">
               Voir tout →
             </Link>
           </div>
-          <div className="divide-y divide-white/[0.05]">
+          <div className="divide-y divide-[#181818]/[0.06]">
             {(upcomingVisits as (Visit & { lead?: { full_name: string } | null; property?: { title: string; neighborhood: string | null } | null })[])?.map((visit) => (
-              <div key={visit.id} className="px-5 py-3.5 hover:bg-white/[0.02] transition">
+              <div key={visit.id} className="px-5 py-3.5 hover:bg-[#181818]/[0.02] transition">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-white truncate">
-                      {visit.property?.title ?? <span className="text-[#555]">Non assigné</span>}
+                    <p className="text-xs font-medium text-[#181818] truncate">
+                      {visit.property?.title ?? <span className="text-[#A09E96]">Non assigné</span>}
                     </p>
-                    <p className="text-xs text-[#666] mt-0.5 truncate">
+                    <p className="text-xs text-[#91908C] mt-0.5 truncate">
                       {visit.lead?.full_name ?? '—'}
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-xs font-semibold text-[#3ECF8E]">
+                    <p className="text-xs font-semibold text-[#1F8A5B]">
                       {new Date(visit.scheduled_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
                     </p>
-                    <p className="text-[10px] text-[#666]">
+                    <p className="text-[10px] text-[#91908C]">
                       {new Date(visit.scheduled_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
@@ -185,7 +185,7 @@ export default async function DashboardPage() {
             ))}
             {(!upcomingVisits || upcomingVisits.length === 0) && (
               <div className="px-5 py-8 text-center">
-                <p className="text-sm text-[#555]">Aucune visite planifiée</p>
+                <p className="text-sm text-[#A09E96]">Aucune visite planifiée</p>
               </div>
             )}
           </div>

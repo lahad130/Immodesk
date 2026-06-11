@@ -31,14 +31,14 @@ export default async function InspectionsPage() {
     <div className="space-y-5 max-w-5xl">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-white">Inspections</h2>
-          <p className="text-sm text-[#888]">
+          <h2 className="text-lg font-semibold text-[#181818]">Inspections</h2>
+          <p className="text-sm text-[#62605B]">
             {displayInspections.length} état{displayInspections.length !== 1 ? 's' : ''} des lieux
           </p>
         </div>
         <Link
           href="/dashboard/inspections/new"
-          className="flex items-center gap-2 px-4 py-2 bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 text-black text-sm font-semibold rounded-xl transition"
+          className="flex items-center gap-2 px-4 py-2 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 text-white text-sm font-semibold rounded-xl transition"
         >
           <svg
             className="w-4 h-4"
@@ -57,8 +57,8 @@ export default async function InspectionsPage() {
         </Link>
       </div>
 
-      <div className="bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden">
-        <div className="hidden sm:grid grid-cols-[110px_1fr_1fr_90px_70px_80px] gap-4 px-5 py-3 border-b border-white/[0.07] text-xs text-[#555] font-semibold uppercase tracking-wide">
+      <div className="bg-white border border-[#181818]/[0.08] rounded-2xl overflow-hidden">
+        <div className="hidden sm:grid grid-cols-[110px_1fr_1fr_90px_70px_80px] gap-4 px-5 py-3 border-b border-[#181818]/[0.08] text-xs text-[#A09E96] font-semibold uppercase tracking-wide">
           <span>Date</span>
           <span>Bien</span>
           <span>Locataire</span>
@@ -66,15 +66,15 @@ export default async function InspectionsPage() {
           <span>Photos</span>
           <span>Actions</span>
         </div>
-        <div className="divide-y divide-white/[0.05]">
+        <div className="divide-y divide-[#181818]/[0.06]">
           {displayInspections.map((inspection) => (
             <Link
               key={inspection.id}
               href={`/dashboard/inspections/${inspection.id}`}
-              className="grid sm:grid-cols-[110px_1fr_1fr_90px_70px_80px] gap-4 items-center px-5 py-4 hover:bg-white/[0.02] transition"
+              className="grid sm:grid-cols-[110px_1fr_1fr_90px_70px_80px] gap-4 items-center px-5 py-4 hover:bg-[#181818]/[0.02] transition"
             >
               {/* Date */}
-              <p className="text-sm text-[#888]">
+              <p className="text-sm text-[#62605B]">
                 {new Date(inspection.inspection_date).toLocaleDateString('fr-FR', {
                   day: 'numeric',
                   month: 'short',
@@ -83,43 +83,43 @@ export default async function InspectionsPage() {
               </p>
 
               {/* Bien */}
-              <p className="text-sm text-white truncate">
+              <p className="text-sm text-[#181818] truncate">
                 {inspection.property?.title ?? (
-                  <span className="text-[#555]">Non assigné</span>
+                  <span className="text-[#A09E96]">Non assigné</span>
                 )}
               </p>
 
               {/* Locataire */}
-              <p className="text-sm text-[#888] truncate">
+              <p className="text-sm text-[#62605B] truncate">
                 {inspection.lease?.tenant?.full_name ?? '—'}
               </p>
 
               {/* Type badge */}
               {inspection.type === 'entree' ? (
-                <span className="text-xs font-semibold px-2 py-1 rounded-full text-[#3ECF8E] bg-[#3ECF8E]/10 w-fit">
+                <span className="text-xs font-semibold px-2 py-1 rounded-full text-[#1F8A5B] bg-[#1F8A5B]/10 w-fit">
                   Entrée
                 </span>
               ) : (
-                <span className="text-xs font-semibold px-2 py-1 rounded-full text-orange-400 bg-orange-500/10 w-fit">
+                <span className="text-xs font-semibold px-2 py-1 rounded-full text-orange-600 bg-orange-500/10 w-fit">
                   Sortie
                 </span>
               )}
 
               {/* Photos count */}
-              <p className="text-sm text-[#666]">
+              <p className="text-sm text-[#91908C]">
                 {inspection.photos?.length ?? 0} photo{(inspection.photos?.length ?? 0) !== 1 ? 's' : ''}
               </p>
 
               {/* View link */}
-              <span className="text-xs text-[#3ECF8E] hover:text-[#3ECF8E]/80">
+              <span className="text-xs text-[#1F8A5B] hover:text-[#1F8A5B]/80">
                 Voir →
               </span>
             </Link>
           ))}
           {!displayInspections.length && (
             <div className="px-5 py-12 text-center">
-              <p className="text-sm text-[#555]">Aucun état des lieux enregistré</p>
-              <p className="text-xs text-[#444] mt-1">Créez votre premier état des lieux</p>
+              <p className="text-sm text-[#A09E96]">Aucun état des lieux enregistré</p>
+              <p className="text-xs text-[#B5B3AB] mt-1">Créez votre premier état des lieux</p>
             </div>
           )}
         </div>
