@@ -39,11 +39,11 @@ export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="bg-[#0f0f0f] py-20 lg:py-28">
+    <section id="faq" className="bg-[#FAF9F5] py-20 lg:py-28">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <p className="text-sm font-medium text-[#3ECF8E] mb-3">FAQ</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <p className="text-sm font-medium text-[#CC785C] mb-3">FAQ</p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-medium text-[#181818] tracking-tight">
             Questions fréquentes
           </h2>
         </div>
@@ -54,16 +54,16 @@ export default function Faq() {
             return (
               <div
                 key={faq.question}
-                className="bg-[#171717] border border-white/[0.08] rounded-2xl overflow-hidden"
+                className="bg-white border border-[#E6E4DA] rounded-2xl overflow-hidden"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-sm font-medium text-white">{faq.question}</span>
+                  <span className="text-sm font-medium text-[#181818]">{faq.question}</span>
                   <svg
-                    className={`w-4 h-4 text-[#3ECF8E] shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 text-[#CC785C] shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -72,7 +72,7 @@ export default function Faq() {
                   </svg>
                 </button>
                 {isOpen && (
-                  <p className="px-5 pb-4 text-sm text-[#888] leading-relaxed">{faq.answer}</p>
+                  <p className="px-5 pb-4 text-sm text-[#62605B] leading-relaxed">{faq.answer}</p>
                 )}
               </div>
             )

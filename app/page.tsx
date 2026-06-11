@@ -8,7 +8,7 @@ import WhatsappButton from '@/components/landing/whatsapp-button'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0f0f0f]">
+    <div className="min-h-screen bg-[#FAF9F5]">
       <Header />
       <main>
         <Hero />

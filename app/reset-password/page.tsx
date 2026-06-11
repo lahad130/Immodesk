@@ -36,26 +36,26 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#FAF9F5] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
-            <span className="text-2xl font-bold text-white">Immo<span className="text-[#3ECF8E]">Desk</span></span>
+            <span className="text-2xl font-bold text-[#181818]">Immo<span className="text-[#CC785C]">Desk</span></span>
           </Link>
-          <h1 className="mt-6 text-2xl font-semibold text-white">Nouveau mot de passe</h1>
-          <p className="mt-2 text-sm text-[#888]">Choisissez un nouveau mot de passe sécurisé</p>
+          <h1 className="mt-6 font-serif text-2xl font-semibold text-[#181818]">Nouveau mot de passe</h1>
+          <p className="mt-2 text-sm text-[#62605B]">Choisissez un nouveau mot de passe sécurisé</p>
         </div>
 
-        <div className="bg-[#171717] border border-white/10 rounded-xl p-8">
+        <div className="bg-white border border-[#E6E4DA] rounded-2xl p-8">
           {error && (
-            <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+            <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-[#ccc] mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-[#3D3D3A] mb-1.5">
                 Nouveau mot de passe
               </label>
               <input
@@ -66,12 +66,12 @@ export default function ResetPasswordPage() {
                 required
                 minLength={6}
                 placeholder="6 caractères minimum"
-                className="w-full px-3 py-2.5 bg-[#0f0f0f] border border-white/10 rounded-lg text-white placeholder-[#555] focus:outline-none focus:ring-2 focus:ring-[#3ECF8E]/50 focus:border-[#3ECF8E] text-sm transition"
+                className="w-full px-3 py-2.5 bg-white border border-[#D9D7CC] rounded-lg text-[#181818] placeholder-[#A8A69E] focus:outline-none focus:ring-2 focus:ring-[#CC785C]/30 focus:border-[#CC785C] text-sm transition"
               />
             </div>
 
             <div>
-              <label htmlFor="confirm" className="block text-sm font-medium text-[#ccc] mb-1.5">
+              <label htmlFor="confirm" className="block text-sm font-medium text-[#3D3D3A] mb-1.5">
                 Confirmer le mot de passe
               </label>
               <input
@@ -81,14 +81,14 @@ export default function ResetPasswordPage() {
                 onChange={(e) => setConfirm(e.target.value)}
                 required
                 placeholder="Répétez le mot de passe"
-                className="w-full px-3 py-2.5 bg-[#0f0f0f] border border-white/10 rounded-lg text-white placeholder-[#555] focus:outline-none focus:ring-2 focus:ring-[#3ECF8E]/50 focus:border-[#3ECF8E] text-sm transition"
+                className="w-full px-3 py-2.5 bg-white border border-[#D9D7CC] rounded-lg text-[#181818] placeholder-[#A8A69E] focus:outline-none focus:ring-2 focus:ring-[#CC785C]/30 focus:border-[#CC785C] text-sm transition"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 px-4 bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 disabled:opacity-50 disabled:cursor-not-allowed text-black font-semibold rounded-lg text-sm transition"
+              className="w-full py-2.5 px-4 bg-[#181818] hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-full text-sm transition"
             >
               {loading ? 'Mise à jour...' : 'Mettre à jour le mot de passe'}
             </button>

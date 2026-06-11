@@ -115,12 +115,19 @@ proxy.ts                      # Middleware Next.js 16 (protection /dashboard)
 
 ## Design
 
-- **Background** : `#0f0f0f`
-- **Surface / Cards** : `#171717`
-- **Brand** : `#3ECF8E`
-- **Texte secondaire** : `#888`
+### Pages publiques (landing, auth, onboarding) — style « Anthropic »
+- **Background** : `#FAF9F5` (crème) · sections alternées `#F0EEE6`
+- **Cards** : blanc, bordure `#E6E4DA`, coins très arrondis (`rounded-2xl/3xl`)
+- **Texte** : `#181818` (principal) · `#62605B` (secondaire) · `#91908C` (muted)
+- **Accent** : `#CC785C` (terracotta)
+- **CTA** : boutons noirs `#181818` arrondis (`rounded-full`)
+- **Titres** : serif (Source Serif 4, `font-serif`) · Corps : Geist Sans
+
+### Dashboard (produit) — thème sombre conservé
+- **Background** : `#0f0f0f` · **Surface / Cards** : `#171717`
+- **Brand** : `#3ECF8E` · **Texte secondaire** : `#888`
 - **Bordures** : `rgba(255,255,255,0.08)`
-- **Typographie** : Geist Sans + Geist Mono
+
 - **Langue** : Français · Prix en FCFA
 
 ---

@@ -35,24 +35,24 @@ export default function Header() {
   const initials = user?.email?.slice(0, 2).toUpperCase() ?? ''
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0f0f0f]/80 backdrop-blur-md border-b border-white/[0.08]">
+    <header className="sticky top-0 z-50 bg-[#FAF9F5]/85 backdrop-blur-md border-b border-[#181818]/[0.07]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-[#3ECF8E] flex items-center justify-center">
-              <svg className="w-4 h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <div className="w-7 h-7 rounded-md bg-[#CC785C] flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V10.5z" />
               </svg>
             </div>
-            <span className="text-lg font-bold text-white">Immo<span className="text-[#3ECF8E]">Desk</span></span>
+            <span className="text-lg font-bold text-[#181818]">Immo<span className="text-[#CC785C]">Desk</span></span>
           </Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#features" className="text-sm text-[#888] hover:text-white transition">Fonctionnalités</a>
-            <a href="#pricing" className="text-sm text-[#888] hover:text-white transition">Tarifs</a>
-            <a href="#faq" className="text-sm text-[#888] hover:text-white transition">FAQ</a>
+            <a href="#features" className="text-sm text-[#62605B] hover:text-[#181818] transition">Fonctionnalités</a>
+            <a href="#pricing" className="text-sm text-[#62605B] hover:text-[#181818] transition">Tarifs</a>
+            <a href="#faq" className="text-sm text-[#62605B] hover:text-[#181818] transition">FAQ</a>
           </nav>
 
           {/* Auth */}
@@ -61,18 +61,18 @@ export default function Header() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="w-8 h-8 rounded-full bg-[#3ECF8E]/20 border border-[#3ECF8E]/30 flex items-center justify-center text-[#3ECF8E] text-xs font-bold hover:bg-[#3ECF8E]/30 transition"
+                  className="w-8 h-8 rounded-full bg-[#CC785C]/15 border border-[#CC785C]/30 flex items-center justify-center text-[#CC785C] text-xs font-bold hover:bg-[#CC785C]/25 transition"
                 >
                   {initials}
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-xl overflow-hidden">
-                    <div className="px-4 py-3 border-b border-white/10">
-                      <p className="text-xs text-[#888] truncate">{user.email}</p>
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-[#E6E4DA] rounded-xl shadow-lg overflow-hidden">
+                    <div className="px-4 py-3 border-b border-[#E6E4DA]">
+                      <p className="text-xs text-[#62605B] truncate">{user.email}</p>
                     </div>
                     <Link
                       href="/logout"
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#ccc] hover:text-white hover:bg-white/5 transition"
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#181818] hover:bg-[#FAF9F5] transition"
                       onClick={() => setDropdownOpen(false)}
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,13 +87,13 @@ export default function Header() {
               <>
                 <Link
                   href="/login"
-                  className="hidden md:inline-flex text-sm text-[#888] hover:text-white transition px-3 py-1.5"
+                  className="hidden md:inline-flex text-sm text-[#62605B] hover:text-[#181818] transition px-3 py-1.5"
                 >
                   Connexion
                 </Link>
                 <Link
                   href="/signup"
-                  className="text-sm font-semibold bg-[#3ECF8E] hover:bg-[#3ECF8E]/90 text-black px-4 py-1.5 rounded-lg transition"
+                  className="text-sm font-medium bg-[#181818] hover:bg-black text-white px-4 py-2 rounded-full transition"
                 >
                   Commencer
                 </Link>
@@ -102,7 +102,7 @@ export default function Header() {
 
             {/* Mobile menu toggle */}
             <button
-              className="md:hidden p-1.5 text-[#888] hover:text-white transition"
+              className="md:hidden p-1.5 text-[#62605B] hover:text-[#181818] transition"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,12 +117,12 @@ export default function Header() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden border-t border-white/[0.08] py-4 space-y-1">
-            <a href="#features" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>Fonctionnalités</a>
-            <a href="#pricing" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>Tarifs</a>
-            <a href="#faq" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>FAQ</a>
+          <div className="md:hidden border-t border-[#181818]/[0.07] py-4 space-y-1">
+            <a href="#features" className="block px-2 py-2 text-sm text-[#62605B] hover:text-[#181818] transition" onClick={() => setMenuOpen(false)}>Fonctionnalités</a>
+            <a href="#pricing" className="block px-2 py-2 text-sm text-[#62605B] hover:text-[#181818] transition" onClick={() => setMenuOpen(false)}>Tarifs</a>
+            <a href="#faq" className="block px-2 py-2 text-sm text-[#62605B] hover:text-[#181818] transition" onClick={() => setMenuOpen(false)}>FAQ</a>
             {!user && (
-              <Link href="/login" className="block px-2 py-2 text-sm text-[#888] hover:text-white transition" onClick={() => setMenuOpen(false)}>Connexion</Link>
+              <Link href="/login" className="block px-2 py-2 text-sm text-[#62605B] hover:text-[#181818] transition" onClick={() => setMenuOpen(false)}>Connexion</Link>
             )}
           </div>
         )}

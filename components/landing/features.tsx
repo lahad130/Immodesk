@@ -57,14 +57,14 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="bg-[#0f0f0f] py-20 lg:py-28">
+    <section id="features" className="bg-[#FAF9F5] py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <p className="text-sm font-medium text-[#3ECF8E] mb-3">Fonctionnalités</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <p className="text-sm font-medium text-[#CC785C] mb-3">Fonctionnalités</p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-medium text-[#181818] tracking-tight">
             Toute votre gestion locative, au même endroit
           </h2>
-          <p className="mt-4 text-[#888] max-w-xl mx-auto">
+          <p className="mt-4 text-[#62605B] max-w-xl mx-auto">
             Remplacez les cahiers, fichiers Excel et reçus papier par un outil pensé
             pour le marché immobilier sénégalais.
           </p>
@@ -74,13 +74,13 @@ export default function Features() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group bg-[#171717] hover:bg-[#1a1a1a] border border-white/[0.08] hover:border-[#3ECF8E]/20 rounded-2xl p-6 transition"
+              className="group bg-white border border-[#E6E4DA] hover:border-[#CC785C]/40 hover:shadow-md hover:shadow-[#181818]/[0.04] rounded-3xl p-6 transition"
             >
-              <div className="w-10 h-10 rounded-xl bg-[#3ECF8E]/10 group-hover:bg-[#3ECF8E]/15 flex items-center justify-center text-[#3ECF8E] mb-4 transition">
+              <div className="w-10 h-10 rounded-xl bg-[#CC785C]/10 group-hover:bg-[#CC785C]/15 flex items-center justify-center text-[#CC785C] mb-4 transition">
                 {feature.icon}
               </div>
-              <h3 className="text-base font-semibold text-white mb-2">{feature.title}</h3>
-              <p className="text-sm text-[#888] leading-relaxed">{feature.description}</p>
+              <h3 className="text-base font-semibold text-[#181818] mb-2">{feature.title}</h3>
+              <p className="text-sm text-[#62605B] leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>
