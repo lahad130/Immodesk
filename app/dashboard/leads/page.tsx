@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import type { Lead } from '@/lib/types'
 import LeadStatusBadge from '@/components/dashboard/lead-status-badge'
+import NouveauLeadModal from '@/components/dashboard/nouveau-lead-modal'
 
 function formatFCFA(n: number | null | undefined) {
   if (!n) return '—'
@@ -45,12 +46,7 @@ export default async function LeadsPage() {
           <h2 className="text-lg font-semibold text-[#181818]">Leads</h2>
           <p className="text-sm text-[#62605B]">{leads?.length ?? 0} leads au total</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 text-white text-sm font-semibold rounded-xl transition">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-          </svg>
-          Nouveau lead
-        </button>
+        <NouveauLeadModal />
       </div>
 
       {/* Status filters */}
@@ -90,6 +86,16 @@ export default async function LeadsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#181818]/[0.04]">
+              {!leads?.length && (
+                <tr>
+                  <td colSpan={7} className="px-5 py-14 text-center">
+                    <p className="text-sm font-medium text-[#181818] mb-1">Aucun lead pour le moment</p>
+                    <p className="text-sm text-[#62605B]">
+                      Ajoutez votre premier prospect avec le bouton « Nouveau lead » ci-dessus.
+                    </p>
+                  </td>
+                </tr>
+              )}
               {(leads as Lead[])?.map((lead) => (
                 <tr key={lead.id} className="hover:bg-[#181818]/[0.02] transition group">
                   {/* Contact */}

@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Sidebar from '@/components/dashboard/sidebar'
 import Topbar from '@/components/dashboard/topbar'
+import PageTransition from '@/components/dashboard/page-transition'
 
 export const metadata = {
   title: 'Dashboard — ImmoDesk',
@@ -25,7 +26,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <Topbar />
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-          {children}
+          <PageTransition>{children}</PageTransition>
         </main>
       </div>
     </div>

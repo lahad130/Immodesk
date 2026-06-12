@@ -98,13 +98,13 @@ export default function NouveauLocataireModal() {
 
       {open && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center animate-fade-in"
           onClick={(e) => { if (e.target === e.currentTarget) closeModal() }}
           onKeyDown={(e) => { if (e.key === 'Escape') closeModal() }}
           tabIndex={-1}
         >
           <div
-            className="bg-white border border-[#181818]/[0.08] rounded-2xl p-6 w-full max-w-md mx-4"
+            className="bg-white border border-[#181818]/[0.08] rounded-2xl p-6 w-full max-w-md animate-scale-in mx-4"
             role="dialog"
             aria-modal="true"
             aria-labelledby="nouveau-locataire-title"

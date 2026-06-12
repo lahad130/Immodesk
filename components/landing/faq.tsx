@@ -71,9 +71,15 @@ export default function Faq() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
-                {isOpen && (
-                  <p className="px-5 pb-4 text-sm text-[#62605B] leading-relaxed">{faq.answer}</p>
-                )}
+                <div
+                  className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="px-5 pb-4 text-sm text-[#62605B] leading-relaxed">{faq.answer}</p>
+                  </div>
+                </div>
               </div>
             )
           })}

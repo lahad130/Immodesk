@@ -5,6 +5,7 @@ import Pricing from '@/components/landing/pricing'
 import Faq from '@/components/landing/faq'
 import Footer from '@/components/landing/footer'
 import WhatsappButton from '@/components/landing/whatsapp-button'
+import Reveal from '@/components/ui/reveal'
 
 export default function Home() {
   return (
@@ -12,9 +13,9 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Features />
-        <Pricing />
-        <Faq />
+        <Reveal><Features /></Reveal>
+        <Reveal><Pricing /></Reveal>
+        <Reveal><Faq /></Reveal>
       </main>
       <Footer />
       <WhatsappButton />

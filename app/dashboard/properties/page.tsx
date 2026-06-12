@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import type { Property } from '@/lib/types'
+import NouveauBienModal from '@/components/dashboard/nouveau-bien-modal'
 
 function formatFCFA(n: number) {
   if (n >= 1_000_000_000) return `${(n / 1_000_000_000).toFixed(1).replace('.0', '')} Md FCFA`
@@ -44,12 +45,7 @@ export default async function PropertiesPage() {
           <h2 className="text-lg font-semibold text-[#181818]">Biens immobiliers</h2>
           <p className="text-sm text-[#62605B]">{stats.total} biens · {stats.disponible} disponibles</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[#1F8A5B] hover:bg-[#1F8A5B]/90 text-white text-sm font-semibold rounded-xl transition">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-          </svg>
-          Ajouter un bien
-        </button>
+        <NouveauBienModal />
       </div>
 
       {/* Stats */}
@@ -67,6 +63,22 @@ export default async function PropertiesPage() {
         ))}
       </div>
 
+      {/* Empty state */}
+      {!properties?.length && (
+        <div className="bg-white border border-[#181818]/[0.08] rounded-2xl py-16 px-6 text-center">
+          <div className="w-12 h-12 rounded-2xl bg-[#1F8A5B]/10 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-[#1F8A5B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V10.5z" />
+            </svg>
+          </div>
+          <h3 className="text-base font-semibold text-[#181818] mb-1">Aucun bien pour le moment</h3>
+          <p className="text-sm text-[#62605B] max-w-sm mx-auto">
+            Ajoutez votre premier bien avec le bouton « Ajouter un bien » ci-dessus.
+            Il apparaîtra ici avec son statut, son prix et ses caractéristiques.
+          </p>
+        </div>
+      )}
+
       {/* Grid of property cards */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {(properties as Property[])?.map((p) => {
@@ -77,7 +89,7 @@ export default async function PropertiesPage() {
               className="bg-white border border-[#181818]/[0.08] hover:border-[#181818]/[0.15] rounded-2xl overflow-hidden transition group cursor-pointer"
             >
               {/* Image placeholder */}
-              <div className="h-36 bg-gradient-to-br from-[#1a1a1a] to-[#222] flex items-center justify-center text-4xl relative">
+              <div className="h-36 bg-gradient-to-br from-[#F0EEE6] to-[#E2E0D4] flex items-center justify-center text-4xl relative">
                 {typeIcons[p.property_type ?? ''] ?? '🏠'}
                 <div className="absolute top-3 right-3">
                   <span className={`text-xs font-semibold px-2 py-1 rounded-full ${sc.className}`}>

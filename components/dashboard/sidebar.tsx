@@ -110,7 +110,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`hidden lg:flex flex-col bg-[#FAF9F5] border-r border-[#181818]/[0.08] transition-all duration-200 ${
+      className={`hidden lg:flex flex-col bg-[#FAF9F5] border-r border-[#181818]/[0.08] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         collapsed ? 'w-16' : 'w-56'
       }`}
     >
@@ -131,7 +131,7 @@ export default function Sidebar() {
           const showSection = !collapsed && 'section' in item && item.section &&
             (index === 0 || !('section' in nav[index - 1]) || (nav[index - 1] as { section?: string }).section !== item.section)
           return (
-            <div key={item.href}>
+            <div key={item.href} className="animate-fade-up" style={{ animationDelay: `${index * 35}ms` }}>
               {showSection && (
                 <div className="px-2.5 pt-3 pb-1">
                   <p className="text-[10px] font-semibold text-[#B5B3AB] uppercase tracking-wider">
@@ -142,13 +142,18 @@ export default function Sidebar() {
               <Link
                 href={item.href}
                 title={collapsed ? item.label : undefined}
-                className={`flex items-center gap-3 px-2.5 py-2 rounded-lg text-sm transition group ${
+                className={`relative flex items-center gap-3 px-2.5 py-2 rounded-lg text-sm transition-all duration-200 group ${
                   active
                     ? 'bg-[#1F8A5B]/10 text-[#1F8A5B]'
-                    : 'text-[#62605B] hover:text-[#181818] hover:bg-[#181818]/5'
+                    : 'text-[#62605B] hover:text-[#181818] hover:bg-[#181818]/5 hover:translate-x-0.5'
                 } ${collapsed ? 'justify-center' : ''}`}
               >
-                <span className="shrink-0">{item.icon}</span>
+                <span
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-0.5 rounded-full bg-[#1F8A5B] transition-all duration-300 ${
+                    active ? 'h-5 opacity-100' : 'h-0 opacity-0'
+                  }`}
+                />
+                <span className="shrink-0 transition-transform duration-200 group-hover:scale-110">{item.icon}</span>
                 {!collapsed && (
                   <span className="flex-1 font-medium">{item.label}</span>
                 )}

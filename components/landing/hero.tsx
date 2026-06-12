@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Text */}
-          <div>
+          <div className="animate-fade-up">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#CC785C]/10 border border-[#CC785C]/25 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#CC785C]" />
               <span className="text-xs text-[#CC785C] font-medium">Gestion locative · Sénégal 🇸🇳</span>
@@ -71,7 +71,7 @@ export default function Hero() {
           </div>
 
           {/* Right: Dashboard mockup */}
-          <div className="relative lg:block">
+          <div className="relative lg:block animate-fade-up" style={{ animationDelay: '180ms' }}>
             <div className="relative bg-white border border-[#E6E4DA] rounded-3xl overflow-hidden shadow-xl shadow-[#181818]/[0.06]">
               {/* Window chrome */}
               <div className="flex items-center gap-2 px-4 py-3 border-b border-[#E6E4DA] bg-[#F0EEE6]">
